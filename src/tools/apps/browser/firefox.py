@@ -2,14 +2,15 @@
 This module contains an Firefox managing class
 """
 
-from os import path
 from enum import Enum
+from os import path
 from subprocess import CalledProcessError, run
 from time import sleep
 
 from rich.console import Console
 
 from ...utils.utils import get_distro_short_name
+
 
 console = Console()
 

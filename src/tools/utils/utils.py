@@ -2,8 +2,8 @@
 This module contains some basic util functions
 """
 
-from re import sub
 from csv import reader
+from re import sub
 
 
 def to_snakecase(string: str) -> str:

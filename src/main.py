@@ -4,6 +4,7 @@
 
 from .ui.selection import Selection
 
+
 app = Selection(
     idlist=["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"],
     itemlist=["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"],

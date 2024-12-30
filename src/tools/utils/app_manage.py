@@ -7,6 +7,7 @@ from subprocess import CalledProcessError, run
 
 from .errors import UnknownPkgManagerError
 
+
 _pkg_dict: dict[str, list[str]] = {
     "debian": ["eatmydata", "apt"],
     "alpine": ["apk"],
