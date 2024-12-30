@@ -1,5 +1,5 @@
 SHELL = /bin/bash
-APP_DIR = pyproject  # TODO: Replace with the name of your app directory.
+APP_DIR = src
 
 
 default: install
@@ -65,4 +65,4 @@ test:
 	pytest
 
 run:
-	cd $(APP_DIR) && python ./pyproject.py World
+	cd $(APP_DIR)/.. && python3 -m src.main

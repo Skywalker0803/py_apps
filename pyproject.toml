@@ -1,16 +1,17 @@
 [tool.poetry]
 # Remove this line if you want to distribute your project as an installable package.
 package-mode = false
-name = "py-project-template"
-version = "X.X.X"
-description = "Starter template for a Python app - including CI and docs"
-authors = ["Michael Currin <18750745+MichaelCurrin@users.noreply.github.com>"]
+name = "py3_tmoe"
+version = "0.0.1"
+description = "Trying to revive the famous TMOE Project"
+authors = ["Legolas Wang <legolaswang0803@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.10"
+textual = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
