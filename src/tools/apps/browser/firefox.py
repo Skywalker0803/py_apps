@@ -56,12 +56,12 @@ class Firefox:
                     " software-properties-common [cyan]-y[/cyan]",
                 )
                 run(["apt", "install", "software-properties-common", "-y"], check=True)
-            except CalledProcessError as e:
+            except CalledProcessError as err:
                 print(
                     "\033[91m\033[1m[Error]\033[0m",
                     " Error when installing software-properties-common for ppa",
                 )
-                print(f"\033[31mError message\033[0m\n\t{e.output}")
+                print(f"\033[31mError message\033[0m\n\t{err.output}")
 
     def prepare(self):
         """
@@ -71,8 +71,8 @@ class Firefox:
             self.dependency_main = "firefox-esr"
             self.dependency_others = "firefox-esr-locale-zh-hans"
         elif self.variant == FirefoxVariants.FIREFOX:
-            # TODO: get firefox implemented
-            pass
+            self.dependency_main = "firefox"
+            self.dependency_others = "firefox-i18n-zh-cn"
 
         if self.DISTRO in ["debian", "ubuntu"]:
             self.dependency_others += " ffmpeg"
@@ -83,12 +83,12 @@ class Firefox:
                         ["sudo", "add-apt-repository", "ppa:mozillateam/ppa", "-y"],
                         check=True,
                     )
-                except CalledProcessError as e:
+                except CalledProcessError as err:
                     print(
                         "\033[91m\033[1m[Error]\033[0m",
                         " Error occurred when trying to add mozilla PPA to the system",
                     )
-                    print(f"\033[31mError message\033[0m\n\t{e.output}")
+                    print(f"\033[31mError message\033[0m\n\t{err.output}")
         elif self.DISTRO == "arch":
             self.dependency_others += " firefox-i18n-zh-cn firefox-i18n-zh-tw"
         elif self.DISTRO == "gentoo":
@@ -97,9 +97,9 @@ class Firefox:
         elif self.DISTRO == "suse":
             try:
                 run(["dispatch-conf"], check=True)
-            except CalledProcessError as e:
+            except CalledProcessError as err:
                 print("\033[91m\033[1m[Error]\033[0m Error when running dispatch-conf")
-                print(f"\033[31mError message\033[0m\n\t{e.output}")
+                print(f"\033[31mError message\033[0m\n\t{err.output}")
             self.dependency_main = "MozillaFirefox-esr"
             self.dependency_others = "MozillaFirefox-esr-translations-common"
 
@@ -107,7 +107,7 @@ class Firefox:
         """
         The installation method of firefox
         """
-        pass
+        return
 
 
 # Firefox(variant=FirefoxVariants.FIREFOX).setup_ppa_env()

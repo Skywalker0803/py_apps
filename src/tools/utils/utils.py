@@ -29,15 +29,15 @@ def get_distro_fullname() -> str:
     """
     release_data = {}
 
-    with open("/etc/os-release", encoding="utf-8") as f:
-        release_reader = reader(f, delimiter="=")
+    with open("/etc/os-release", encoding="utf-8") as os_release:
+        release_reader = reader(os_release, delimiter="=")
         for row in release_reader:
             if row:
                 release_data[row[0]] = row[1]
 
         if release_data["ID"] in ["debian", "raspbian"]:
-            with open("/etc/debian_version", encoding="utf-8") as f:
-                debian_version = f.readline().strip()
+            with open("/etc/debian_version", encoding="utf-8") as debian_release:
+                debian_version = debian_release.readline().strip()
                 major_version = debian_version.split(".")[0]
             version_split = release_data["VERSION"].split(" ", maxsplit=1)
             if version_split[0] == major_version:

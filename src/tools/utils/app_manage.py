@@ -105,10 +105,10 @@ def install_app(distro: str, app: str, app_dep: str = "") -> None:
 
     try:
         # If there is an updating command, update
-        if not update == "":
+        if update != "":
             run(args=[*pkg, update], check=True)
         # Execute sudo [pkg] [install] [app] [dependencies] [options]
         run(["sudo", *pkg, install, app, *app_dep_list, *extra_options], check=True)
-    except CalledProcessError as e:
+    except CalledProcessError as err:
         print(f"\033[91m\033[1m[Error]\033[0m Error when installing {app} {app_dep}")
-        print(f"\033[31mError message\033[0m\n\t{e.output}")
+        print(f"\033[31mError message\033[0m\n\t{err.output}")
