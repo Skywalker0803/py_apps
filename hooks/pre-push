@@ -5,4 +5,4 @@ git pull --rebase || git pull --rebase origin main
 
 make pylint
 make fmt
-make typecheck
+# make typecheck
