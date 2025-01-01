@@ -2,8 +2,8 @@
 项目的main模块
 """
 
-from .ui.selection import Selection
 from .tools.utils.utils import get_distro_short_name
+from .ui.selection import Selection
 
 
 app: Selection = Selection(
