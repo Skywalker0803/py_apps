@@ -2,6 +2,8 @@
 This module contains the non-scrollable dialog screen
 """
 
+from typing import Any
+
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Label
 
@@ -47,7 +49,7 @@ class Dialog(App[str]):
 
         # Iterate the item list
         for item in self.itemlist:
-            button_variant: str = "default"  # Set the default theme as "default"
+            button_variant: Any = "default"  # Set the default theme as "default"
 
             # Check the content of button
             # the buttom will be green if the content is "Yes"

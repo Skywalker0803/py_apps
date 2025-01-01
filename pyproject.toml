@@ -27,3 +27,7 @@ ruff = "^0.8.4"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[[tool.mypy.overrides]]
+module = ["main"]
+ignore_missing_imports = true

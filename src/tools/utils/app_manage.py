@@ -12,8 +12,7 @@ _pkg_dict: dict[str, list[str]] = {
     "debian": ["eatmydata", "apt"],
     "alpine": ["apk"],
     "arch": ["pacman"],
-    "centos": ["yum"],
-    "fedora": ["yum"],
+    "redhat": ["yum"],
     "openwrt": ["opkg"],
     "gentoo": ["emerge"],
     "suse": ["dnf"],
@@ -25,8 +24,7 @@ _install_dict: dict[str, str] = {
     "debian": "install",
     "alpine": "add",
     "arch": "-Sy",
-    "centos": "install",
-    "fedora": "install",
+    "redhat": "install",
     "openwrt": "install",
     "gentoo": "-vk",
     "suse": "install",
@@ -37,18 +35,17 @@ _install_dict: dict[str, str] = {
 _update_dict: dict[str, str] = {
     "debian": "update",
     "alpine": "update",
-    "centos": "update",
-    "fedora": "update",
+    "redhat": "update",
     "openwrt": "update",
     "suse": "update",
 }
 
 _install_opt_dict: dict[str, list[str]] = {
     "debian": ["-y"],
-    "centos": ["-y", "--skip-broken"],
-    "fedora": ["-y", "--skip-broken"],
+    "redhat": ["-y", "--skip-broken"],
     "suse": ["-y", "--skip-broken"],
     "void": ["-y"],
+    "arch": ["--noconfirm", "--needed"],
 }
 
 
@@ -79,29 +76,16 @@ def install_app(distro: str, app: str, app_dep: str = "") -> None:
     if pkg is None or install is None:
         raise UnknownPkgManagerError(distro=distro)
 
-    if pkg[0] in ["fedora", "centos"] and path.exists("/usr/bin/dnf"):
+    # For RedHat distros
+    if pkg[0] == "redhat" and path.exists("/usr/bin/dnf"):
         pkg = ["dnf"]
 
-    # For debian & ubuntu
-    if distro in ["debian", "ubuntu"]:
-        extra_options = ["-y"]
-    # For archlinux
-    elif distro == "arch":
-        extra_options = ["--noconfirm", "--needed"]
-    # For redhat
-    elif distro in ["centos", "fedora"]:
-        extra_options = ["-y", "--skip-broken"]
-    # For suse
     elif distro == "suse":
-        extra_options = ["-y", "--skip-broken"]
         if path.exists("/usr/bin/zypper"):
             pkg = ["zypper"]
             install = "in"
             update = ""
             extra_options.pop()
-    # For void linux
-    elif distro == "void":
-        extra_options = ["-y"]
 
     try:
         # If there is an updating command, update
