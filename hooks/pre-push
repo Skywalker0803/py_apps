@@ -3,6 +3,4 @@
 # On a feature branch that has no remote yet, this first part would fail.
 git pull --rebase || git pull --rebase origin main
 
-make pylint
-make fmt
-# make typecheck
+make all

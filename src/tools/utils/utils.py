@@ -5,7 +5,8 @@ This module contains some basic util functions
 from csv import reader
 from pathlib import Path
 from re import search, sub
-from subprocess import CalledProcessError, run as process_run
+from subprocess import CalledProcessError
+from subprocess import run as process_run
 
 
 def to_snakecase(string: str) -> str:
