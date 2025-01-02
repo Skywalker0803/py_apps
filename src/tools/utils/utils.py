@@ -5,6 +5,7 @@ This module contains some basic util functions
 from csv import reader
 from pathlib import Path
 from re import search, sub
+from subprocess import CalledProcessError, run as process_run
 
 
 def to_snakecase(string: str) -> str:
@@ -135,3 +136,21 @@ def get_distro_short_name() -> list[str]:
     return (
         [distro, debian_distro] if not debian_distro == "" else [distro, redhat_distro]
     )
+
+
+def run(cmd_args: list[str], msg: str = ""):
+    """
+    The function which runs the command with error processing abilities
+
+    Params:
+        cmd_args: the command list arguments
+        msg: the message printed when an error occurred, usually started with a "when"
+    """
+    try:
+        process_run(args=cmd_args, check=True)
+    except CalledProcessError as err:
+        print(
+            "\033[91m\033[1m[Error]",
+            "An error occurred!" if msg == "" else f"An error occurred {msg}",
+        )
+        print(f"\033[31mError message\033[0m\n\t{err.output}")

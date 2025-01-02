@@ -49,23 +49,24 @@ _install_opt_dict: dict[str, list[str]] = {
 }
 
 
-def install_app(distro: str, app: str, app_dep: str = "") -> None:
+def install_app(distro: str, app: str, app_dep_str: str = "") -> None:
     """
     Install the appointed app and its dependencies for the given distro
 
     Params:
         distro: the distro given
         app: the app to be installed
-        app_dep: the dependencies to be installed, in the form of "a b c"
+        app_dep_str: the dependencies to be installed, in the form of "a b c"
 
     Type:
         distro: str
         app: str
-        app_dep: str | None
+        app_dep_str: str
 
     Throws: UnknownPkgManagerError
     """
-    app_dep_list: list[str] = app_dep.split(" ")
+
+    app_dep: list[str] = app_dep_str.split(" ", maxsplit=1)
 
     # Declaring pkg manager & installation command & updating command & extra options
     pkg: list[str] | None = _pkg_dict.get(distro, None)
@@ -92,7 +93,9 @@ def install_app(distro: str, app: str, app_dep: str = "") -> None:
         if update != "":
             run(args=[*pkg, update], check=True)
         # Execute sudo [pkg] [install] [app] [dependencies] [options]
-        run(["sudo", *pkg, install, app, *app_dep_list, *extra_options], check=True)
+        run(["sudo", *pkg, install, app, *app_dep, *extra_options], check=True)
     except CalledProcessError as err:
-        print(f"\033[91m\033[1m[Error]\033[0m Error when installing {app} {app_dep}")
+        print(
+            f"\033[91m\033[1m[Error]\033[0m Error when installing {app} {' '.join(app_dep)}"
+        )
         print(f"\033[31mError message\033[0m\n\t{err.output}")
