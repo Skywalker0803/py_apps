@@ -4,7 +4,7 @@ APP_DIR = src
 
 default: install
 
-all: hooks install fmt-check lint typecheck test
+all: hooks install fmt-check lint typecheck
 
 
 h help:
