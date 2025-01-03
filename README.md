@@ -10,13 +10,13 @@
 [![Made with Python](https://img.shields.io/badge/Python->=3.6-blue?logo=python&logoColor=white&style=for-the-badge)](https://python.org "Go to Python website")
 
 ## For developers
-[![code style - black](https://img.shields.io/badge/code_style-black-blue&style=for-the-badge)](https://black.readthedocs.io/)
-[![dev dependency - flake8](https://img.shields.io/badge/code_format-flake8-blue&style=for-the-badge)](https://pypi.org/project/flake8)
-[![dev dependency - pylint](https://img.shields.io/badge/code_linting-pylint-blue&style=for-the-badge)](https://pypi.org/project/pylint)
-[![dev dependency - mypy](https://img.shields.io/badge/type_test-mypy-blue&style=for-the-badge)](https://pypi.org/project/mypy)
-[![dev dependency - pytest](https://img.shields.io/badge/test-pytest-blue&style=for-the-badge)](https://pypi.org/project/pytest)
+[![code style - black](https://img.shields.io/badge/code_style-black-blue?style=for-the-badge)](https://black.readthedocs.io/)
+[![code linting - flake8](https://img.shields.io/badge/linting-flake8-blue?style=for-the-badge)](https://pypi.org/project/flake8)
+[![code linting - pylint](https://img.shields.io/badge/code_linting-pylint-blue?style=for-the-badge)](https://pypi.org/project/pylint)
+[![type test - mypy](https://img.shields.io/badge/type_test-mypy-blue?style=for-the-badge)](https://pypi.org/project/mypy)
+[![code test - pytest](https://img.shields.io/badge/test-pytest-blue?style=for-the-badge)](https://pypi.org/project/pytest)
 
-**Note**: this project uses black & isort for code formatting, `make` for automatic tasks.
+**Note**: this project uses `black` & `isort` for code formatting, `make` for automatic tasks.
 
 DO NOT USE default code formatting feature of your IDE, make sure to run `make fmt` before committing to the project
 
