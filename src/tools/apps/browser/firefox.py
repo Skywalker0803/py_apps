@@ -8,8 +8,8 @@ from time import sleep
 
 from rich.console import Console
 
-from ...utils.utils import get_distro_short_name, run
 from ...utils.app_manage import install_app
+from ...utils.utils import get_distro_short_name, run
 
 
 console = Console()
@@ -104,7 +104,9 @@ class Firefox:
                 """Package: *
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split("\n", maxsplit=1)
+""".split(
+                    "\n", maxsplit=1
+                )
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
