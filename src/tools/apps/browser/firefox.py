@@ -8,8 +8,8 @@ from time import sleep
 
 from rich.console import Console
 
-from ...utils.app_manage import install_app
 from ...utils.utils import get_distro_short_name, run
+from ...utils.app_manage import install_app
 
 
 console = Console()
@@ -104,9 +104,7 @@ class Firefox:
                 """Package: *
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
@@ -179,7 +177,7 @@ Pin-Priority: 900
                     msg="when trying to fix misconfigured deb packages",
                 )
 
-    def _install_for_firefox(self):
+    def _install_for_firefox(self) -> None:
         """
         Installation for firefox
         """
