@@ -8,8 +8,8 @@ from time import sleep
 
 from rich.console import Console
 
-from ...utils.utils import get_distro_short_name, run
 from ...utils.app_manage import install_app
+from ...utils.utils import get_distro_short_name, run
 
 
 console = Console()
