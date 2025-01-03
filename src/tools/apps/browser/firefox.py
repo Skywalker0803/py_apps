@@ -8,8 +8,8 @@ from time import sleep
 
 from rich.console import Console
 
-from ...utils.app_manage import install_app
 from ...utils.utils import get_distro_short_name, run
+from ...utils.app_manage import install_app
 
 
 console = Console()
@@ -104,9 +104,7 @@ class Firefox:
                 """Package: *
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
@@ -148,6 +146,9 @@ Pin-Priority: 900
             self._prepare_for_esr()
 
     def _install_for_esr(self) -> None:
+        """
+        Installation for ESR
+        """
         install_app(
             distro=self.DISTRO,
             app=self.dependency_main,
@@ -156,9 +157,55 @@ Pin-Priority: 900
         if (not path.exists("/usr/bin/firefox")) and (
             not path.exists("/usr/bin/firefox-esr")
         ):
-            # TODO: implement self._install_for_firefox()
-            # self._install_for_firefox
-            pass
+            self._install_for_firefox()
+        else:
+            if self.DISTRO == "debian":
+                package: str = "firefox-esr"
+                run(
+                    cmd_args=[
+                        "sed",
+                        "-i",
+                        "-E",
+                        "'s@(configure)@pre\\1@'",
+                        f"/var/lib/dpkg/info/{package}.postinst",
+                    ],
+                    msg="when changing configure to preconfigure in"
+                    + f"/var/lib/dpkg/info/{package}.postinst",
+                )
+                run(
+                    cmd_args=["sudo", "dpkg", "--configure", "-a"],
+                    msg="when trying to fix misconfigured deb packages",
+                )
+
+    def _install_for_firefox(self):
+        """
+        Installation for firefox
+        """
+        install_app(
+            distro=self.DISTRO,
+            app=self.dependency_main,
+            app_dep_str=" ".join(self.dependency_others),
+        )
+        if not path.exists("/usr/bin/firefox"):
+            self._install_for_esr()
+        else:
+            if self.DISTRO == "debian":
+                package: str = "firefox"
+                run(
+                    cmd_args=[
+                        "sed",
+                        "-i",
+                        "-E",
+                        "'s@(configure)@pre\\1@'",
+                        f"/var/lib/dpkg/info/{package}.postinst",
+                    ],
+                    msg="when changing configure to preconfigure in"
+                    + f"/var/lib/dpkg/info/{package}.postinst",
+                )
+                run(
+                    cmd_args=["sudo", "dpkg", "--configure", "-a"],
+                    msg="when trying to fix misconfigured deb packages",
+                )
 
     def install(self) -> None:
         """
@@ -169,4 +216,7 @@ Pin-Priority: 900
             firefox.prepare()
             firefox.install()
         """
-        return
+        if self.DISTRO == FirefoxVariants.ESR:
+            self._install_for_esr()
+        elif self.DISTRO == FirefoxVariants.FIREFOX:
+            self._install_for_firefox()
