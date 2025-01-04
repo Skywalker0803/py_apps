@@ -66,3 +66,9 @@ test:
 
 run:
 	cd $(APP_DIR)/.. && python3 -m src.main
+
+exp:
+	# Export dependencies for pip
+	poetry export -f requirements.txt --output requirements.txt --without-hashes
+	# Export dev dependencies for pip
+	poetry export -f requirements.txt --only dev --output requirements-dev.txt --without-hashes
