@@ -29,11 +29,15 @@ class Vivaldi:
         Prepare for vivaldi installation
         """
 
+        # Use BeautifulSoup to parse the vivaldi download page for getting the download link
         repo_page = BeautifulSoup(get(self.REPO_URL, timeout=5).text, "html.parser")
 
+        # Find all links in download page
         links: list[str] = repo_page.find_all("a")
 
+        # Iterate the links to find the correct pkg link
         for link in links:
+            # Supported architecture for deb pkgs
             arch_is_supported_deb: bool = self.arch_type in [
                 "amd64",
                 "arm64",
@@ -41,7 +45,9 @@ class Vivaldi:
                 "armhf",
             ]
 
+            # If the link isn't null
             if link and arch_is_supported_deb:
+                # If the link exists and is a deb link
                 if self.distro == "debian" and match(r"*.deb", link):
                     self.pkg_url = link.replace("amd64.deb", f"{self.arch_type}.deb")
 
@@ -52,14 +58,18 @@ class Vivaldi:
                 ):
                     if self.arch_type in ["amd64", "i386"]:
                         self.pkg_url = (
+                            # Change the link's architecture to i386 to match the architecture
+                            # The "amd64" is "x86_64" for rpms
                             link.replace("x86_64", self.arch_type)
                             if self.arch_type == "i386"
                             else link
                         )
                         break
                     else:
+                        # Raise an error if there's no found url matches the conditions
                         raise UnsupportedArchitectureError(self.arch_type)
 
+        # Raise an error if there's no found url matches the conditions
         if self.pkg_url == "":
             raise UnsupportedArchitectureError(self.arch_type)
 
