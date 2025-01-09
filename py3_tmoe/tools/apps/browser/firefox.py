@@ -6,13 +6,8 @@ from enum import Enum
 from os import path
 from time import sleep
 
-from rich.console import Console
-
-from ...utils.app_manage import install_app
-from ...utils.utils import get_distro_short_name, run
-
-
-console = Console()
+from py3_tmoe.tools.utils.app_manage import install_app
+from py3_tmoe.tools.utils.utils import get_distro_short_name, run
 
 
 class FirefoxVariants(Enum):
@@ -29,10 +24,7 @@ class Firefox:
     The class for managing firefox
 
     Params:
-        variant: the variant for firefox
-
-    Type:
-        variant: FirefoxVariants
+        FirefoxVariants variant: the variant for firefox
     """
 
     DISTRO: str = get_distro_short_name()[0]
@@ -51,10 +43,6 @@ class Firefox:
             sleep(0.5)
             run(cmd_args=["apt", "update", "-y"], msg="when updating apt index")
             sleep(0.5)
-            console.print(
-                "[green]apt[/green] [yellow]install[/yellow]",
-                " software-properties-common [cyan]-y[/cyan]",
-            )
             run(
                 ["apt", "install", "software-properties-common", "-y"],
                 msg="when installing software-properties-common for ppa",
@@ -104,9 +92,7 @@ class Firefox:
                 """Package: *
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],

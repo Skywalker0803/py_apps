@@ -54,14 +54,9 @@ def install_app(distro: str, app: str, app_dep_str: str = "") -> None:
     Install the appointed app and its dependencies for the given distro
 
     Params:
-        distro: the distro given
-        app: the app to be installed
-        app_dep_str: the dependencies to be installed, in the form of "a b c"
-
-    Type:
-        distro: str
-        app: str
-        app_dep_str: str
+        str distro: the distro given
+        str app: the app to be installed
+        str app_dep_str: the dependencies to be installed, in the form of "a b c"
 
     Throws: UnknownPkgManagerError
     """

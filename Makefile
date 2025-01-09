@@ -1,5 +1,5 @@
 SHELL = /bin/bash
-APP_DIR = src
+APP_DIR = py3_tmoe
 
 
 default: install
@@ -65,7 +65,7 @@ test:
 	pytest
 
 run:
-	cd $(APP_DIR)/.. && python3 -m src.main
+	cd $(APP_DIR)/.. && python3 -m ${APP_DIR}.main
 
 exp:
 	# Export dependencies for pip

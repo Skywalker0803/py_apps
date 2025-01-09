@@ -13,14 +13,9 @@ class Dialog(App[str]):
     Horizontal non-scrollable selection dialog
 
     Params:
-        idlist: list of id for returning the selected item
-        itemlist: item list, support Console Markup
-        dialogTitle: the title of the dialog
-
-    Type:
-        idlist: List[str]
-        itemlist: List[str]
-        dialogTitle: str
+        list[str] idlist: list of id for returning the selected item
+        list[str] itemlist: item list, support Console Markup
+        str dialogTitle: the title of the dialog
     """
 
     CSS_PATH = "dialog.tcss"

@@ -4,9 +4,12 @@ This module contains some basic util functions
 
 from csv import reader
 from pathlib import Path
+from platform import machine
 from re import search, sub
 from subprocess import CalledProcessError
 from subprocess import run as process_run
+
+from .common import architecture_aliases, distro_aliases, distro_list
 
 
 def to_snakecase(string: str) -> str:
@@ -14,11 +17,9 @@ def to_snakecase(string: str) -> str:
     Change the given string to the from of a_b_c (Snake Case)
 
     Params:
-        string: the input string
-
-    Type:
-        string: str
+        str string: the input string
     """
+
     return "_".join(
         sub(
             "([A-Z][a-z]+)", r" \1", sub("([A-Z]+)", r" \1", string.replace("-", " "))
@@ -29,6 +30,8 @@ def to_snakecase(string: str) -> str:
 def get_distro_fullname() -> str:
     """
     Get the full name of current Linux distro (such as Ubuntu 22.04.5 LTS (Jammy Jellyfish))
+
+    Returns: str
     """
     release_data = {}
 
@@ -50,36 +53,6 @@ def get_distro_fullname() -> str:
         return f"{release_data['NAME']} {release_data['VERSION']}"
 
 
-distro_list: list[str] = [
-    # Alpine
-    "alpine",
-    # Red hat
-    "fedora",
-    "Fedora",
-    "CentOS",
-    "Red Hat",
-    "redhat",
-    "rhel",
-    # Archlinux
-    "Arch",
-    "Manjaro",
-    # Debian
-    "debian",
-    "deepin",
-    "uos.com",
-    "ubuntu",
-    "Kali",
-    # Gentoo
-    "gentoo",
-    "funtoo",
-    # Solus
-    "Solus",
-    # openSUSE
-    "openSUSE",
-    "suse",
-]
-
-
 def get_distro_short_name() -> list[str]:
     """
     Get the shortened version of current Linux distro name (such as ubuntu, debian)
@@ -99,40 +72,29 @@ def get_distro_short_name() -> list[str]:
             distro = _distro.replace(" ", "").lower()
             break
 
-    if distro in ["debian", "ubuntu", "kali", "deepin", "uos.com"]:
-        distro = "debian"
-        debian_distro_list: list[str] = ["ubuntu", "Kali", "deepin", "uos.com"]
-        for _distro in debian_distro_list:
-            if search(pattern=_distro, string=release_content):
-                debian_distro = _distro
-                if debian_distro in ["deepin", "uos.com"]:
-                    debian_distro = "deepin"
-                break
-    if distro == "manjaro":
-        distro = "arch"
+    # If the distro is preconfigured as an alias, return its "true" name
+    distro = distro_aliases.get(distro, distro)
 
-    if distro in ["fedora", "centos", "redhat"]:
-        distro = "redhat"
-        redhat_distro_list: list[str] = ["Fedora", "ID=centos", "ID=rhel"]
+    debian_distro_list: list[str] = ["ubuntu", "Kali", "deepin", "uos.com"]
+    for _distro in debian_distro_list:
+        if search(pattern=_distro, string=release_content):
+            debian_distro = _distro
+            if debian_distro in ["deepin", "uos.com"]:
+                debian_distro = "deepin"
+            break
 
-        for _distro in redhat_distro_list:
-            if search(pattern=_distro, string=release_content):
-                redhat_distro = (
-                    _distro.lower()
-                    if redhat_distro_list.index(_distro) == 0
-                    else _distro[3 : len(_distro) + 1]
-                )
-                if redhat_distro in ["centos", "rhel"]:
-                    redhat_distro = "centos"
-                break
+    redhat_distro_list: list[str] = ["Fedora", "ID=centos", "ID=rhel"]
 
-    # No need for alpine because "Alpine".lower() == "alpine"
-    # The same rule also applies for Solus, Slackware, openwrt
-    if distro == "funtoo":
-        distro = "gentoo"
-
-    if distro == "opensuse":
-        distro = "suse"
+    for _distro in redhat_distro_list:
+        if search(pattern=_distro, string=release_content):
+            redhat_distro = (
+                _distro.lower()
+                if redhat_distro_list.index(_distro) == 0
+                else _distro[3 : len(_distro) + 1]
+            )
+            if redhat_distro in ["centos", "rhel"]:
+                redhat_distro = "centos"
+            break
 
     return (
         [distro, debian_distro] if not debian_distro == "" else [distro, redhat_distro]
@@ -144,8 +106,8 @@ def run(cmd_args: list[str], msg: str = ""):
     The function which runs the command with error processing abilities
 
     Params:
-        cmd_args: the command list arguments
-        msg: the message printed when an error occurred, usually started with a "when"
+        list[str] cmd_args: the command list arguments
+        str msg: the message printed when an error occurred, usually started with a "when"
     """
     try:
         process_run(args=cmd_args, check=True)
@@ -155,3 +117,22 @@ def run(cmd_args: list[str], msg: str = ""):
             "An error occurred!" if msg == "" else f"An error occurred {msg}",
         )
         print(f"\033[31mError message\033[0m\n\t{err.output}")
+
+
+def check_architecture() -> str:
+    """
+    The function which returns the current architecture
+
+    Returns: str
+    """
+
+    machine_type: str = machine().lower()
+
+    architecture: str = ""
+
+    for alias, arch in architecture_aliases.items():
+        if search(alias, machine_type):
+            architecture = arch
+            break
+
+    return architecture
