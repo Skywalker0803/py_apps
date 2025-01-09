@@ -31,7 +31,7 @@ class Vivaldi:
 
         repo_page = BeautifulSoup(get(self.REPO_URL, timeout=5).text, "html.parser")
 
-        links = repo_page.find_all("a")
+        links: list[str] = repo_page.find_all("a")
 
         for link in links:
             arch_is_supported_deb: bool = self.arch_type in [
@@ -43,25 +43,25 @@ class Vivaldi:
 
             if link and arch_is_supported_deb:
                 if self.distro == "debian" and match(r"*.deb", link):
-                    self.pkg_url = link
-                    self.pkg_url.replace("amd64.deb", f"{self.arch_type}.deb")
+                    self.pkg_url = link.replace("amd64.deb", f"{self.arch_type}.deb")
 
                 elif (
                     self.distro == "redhat"
                     and match(r"*.rpm", link)
                     and match(r"*x86_64*", link)
                 ):
-                    self.pkg_url = link
-                    break
-
-                if self.arch_type not in ["amd64", "arm64", "i386", "armhf"]:
-                    raise UnsupportedArchitectureError(self.arch_type)
-
-            else:
-                continue
+                    if self.arch_type in ["amd64", "i386"]:
+                        self.pkg_url = (
+                            link.replace("x86_64", self.arch_type)
+                            if self.arch_type == "i386"
+                            else link
+                        )
+                        break
+                    else:
+                        raise UnsupportedArchitectureError(self.arch_type)
 
         if self.pkg_url == "":
-            pass
+            raise UnsupportedArchitectureError(self.arch_type)
 
     def install(self) -> None:
         """Install vivaldi browser"""
