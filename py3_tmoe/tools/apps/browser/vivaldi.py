@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from requests import get
 
 from ...utils.errors import DistroXOnlyError, UnsupportedArchitectureError
-from ...utils.utils import check_architecture, get_distro_short_name
+from ...utils.utils import check_architecture, get_distro_short_name, run
 
 
 class Vivaldi:
@@ -79,4 +79,9 @@ class Vivaldi:
             raise UnsupportedArchitectureError(self.arch_type)
 
     def install(self) -> None:
-        """Install vivaldi browser"""
+        """
+        Install vivaldi browser
+        """
+
+        # cd to /tmp dir for not disturbing the user's home dir
+        run(cmd_args=["cd", "/tmp"], msg="when trying to change to /tmp dir")
