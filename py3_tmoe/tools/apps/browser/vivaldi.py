@@ -7,8 +7,10 @@ from re import match
 from bs4 import BeautifulSoup
 from requests import get
 
-from py3_tmoe.tools.utils.errors import DistroXOnlyError, UnsupportedArchitectureError
-from py3_tmoe.tools.utils.utils import check_architecture, get_distro_short_name
+from py3_tmoe.tools.utils.errors import (DistroXOnlyError,
+                                         UnsupportedArchitectureError)
+from py3_tmoe.tools.utils.utils import (check_architecture,
+                                        get_distro_short_name)
 
 
 class Vivaldi:
