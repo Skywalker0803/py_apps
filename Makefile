@@ -4,7 +4,7 @@ APP_DIR = py3_tmoe
 
 default: install
 
-all: hooks install fmt-check lint typecheck
+all: hooks exp install fmt-check lint ti typecheck
 
 
 h help:
@@ -60,6 +60,8 @@ fix-r:
 t typecheck:
 	mypy $(APP_DIR) tests
 
+ti typeinstall:
+	mypy --install-types
 
 test:
 	pytest
