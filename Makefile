@@ -61,7 +61,7 @@ t typecheck:
 	mypy $(APP_DIR) tests
 
 ti typeinstall:
-	mypy --install-types
+	yes | mypy --install-types
 
 test:
 	pytest
