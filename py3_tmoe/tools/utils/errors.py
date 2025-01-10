@@ -18,11 +18,6 @@ class UnknownPkgManagerError(Exception):
         self.distro = distro
 
     def __str__(self) -> str:
-        """
-        This method defines the err msg of UnknownPkgManagerError
-
-        Returns: str
-        """
         msg: str = f" Unknown package manager for Linux distro: {self.distro}"
         return universal_msg + msg
 
@@ -40,13 +35,7 @@ class NoURLError(Exception):
         self.page = page
 
     def __str__(self) -> str:
-        """
-        This method defines the err msg of NoURLError
-
-        Returns: str
-        """
         msg: str = f"There aren't any links found in \033[4m\03395m{self.page}\033[0m"
-
         return universal_msg + msg
 
 
@@ -67,5 +56,28 @@ class UnsupportedArchitectureError(Exception):
             "The software / feature currently doesn't support your architecture: "
             + f"{self.arch}"
         )
+        return universal_msg + msg
 
+
+class DistroXOnlyError(Exception):
+    """
+    This is the error for unsupported distros
+
+    Params:
+        str unsupported_distro: the current distro that's not supported
+        str supported_distro: the supported distro for this feature
+    """
+
+    def __init__(self, unsupported_distro: str, supported_distro: str) -> None:
+        super().__init__()
+        self.unsupported = unsupported_distro
+        self.supported = supported_distro
+
+    def __str__(self) -> str:
+        msg: str = (
+            "Sorry, the software / feature currently doesn't support your distro: "
+            + f"{self.unsupported}"
+            + "\n"
+            + f"Only {self.supported} is now supported"
+        )
         return universal_msg + msg

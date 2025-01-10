@@ -7,7 +7,7 @@ from re import match
 from bs4 import BeautifulSoup
 from requests import get
 
-from py3_tmoe.tools.utils.errors import UnsupportedArchitectureError
+from py3_tmoe.tools.utils.errors import DistroXOnlyError, UnsupportedArchitectureError
 
 from py3_tmoe.tools.utils.utils import check_architecture, get_distro_short_name
 
@@ -27,7 +27,13 @@ class Vivaldi:
     def prepare(self) -> None:
         """
         Prepare for vivaldi installation
+
+        Throws: DistroXOnlyError
         """
+
+        # Raise DistroXOnlyError if distro isn't debian or redhat
+        if self.distro not in ["debian", "redhat"]:
+            raise DistroXOnlyError(self.distro, "debian & redhat")
 
         # Use BeautifulSoup to parse the vivaldi download page for getting the download link
         repo_page = BeautifulSoup(get(self.REPO_URL, timeout=5).text, "html.parser")
