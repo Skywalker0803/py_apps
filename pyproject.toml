@@ -1,0 +1,33 @@
+[tool.poetry]
+# Remove this line if you want to distribute your project as an installable package.
+package-mode = false
+name = "py3_tmoe"
+version = "0.0.1"
+description = "Trying to revive the famous TMOE Project"
+authors = ["Legolas Wang <legolaswang0803@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+textual = "^1.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+isort = "^5.13.2"
+flake8 = "^7.1.1"
+pylint = "^3.3.2"
+pylint-exit = "^1.2.0"
+mypy = "^1.14.0"
+pytest = "^8.3.4"
+ruff = "^0.8.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.mypy.overrides]]
+module = ["main"]
+ignore_missing_imports = true
