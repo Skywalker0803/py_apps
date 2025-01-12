@@ -3,7 +3,7 @@ This module contains some basic util functions
 """
 
 from csv import reader
-from os import path, environ
+from os import environ, path
 from pathlib import Path
 from platform import machine
 from re import search, sub
