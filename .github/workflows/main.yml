@@ -31,9 +31,6 @@ jobs:
       - name: Install dependencies
         run: make install
 
-      - name: Install types
-        run: make ti
-
       - name: Check formatting
         run: make fmt-check
 
