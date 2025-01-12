@@ -1,0 +1,20 @@
+Button {
+  padding: 0;
+  align: left middle;
+  width: 100%;
+  outline: none;
+}
+#container {
+  padding: 2 4;
+}
+#title {
+  height: 4;
+  padding-top: 2;
+  padding-bottom: 1;
+  align: center bottom;
+  text-style: bold;
+}
+VerticalScroll {
+  scrollbar-color: darkgrey;
+  scrollbar-color-active: deepskyblue;
+}
