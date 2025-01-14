@@ -71,9 +71,6 @@ class Vivaldi:
                             else link
                         )
                         break
-                    else:
-                        # Raise an error if there's no found url matches the conditions
-                        raise UnsupportedArchitectureError(self.arch_type)
 
         # Raise an error if there's no found url matches the conditions
         if self.pkg_url == "":
