@@ -140,6 +140,12 @@ def check_architecture() -> str:
 
 
 def check_cmd_exists(cmd: str) -> bool:
+    """
+    Check if a command exists in environment PATH
+
+    Params:
+        str cmd: the command to be checked
+    """
     bool_value: int = 0
 
     for path_item in environ["PATH"].split(":"):
