@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from requests import get
 
 from ...utils.download import download
-from ...utils.errors import DistroXOnlyError, UnsupportedArchitectureError
+from ...error.errors import DistroXOnlyError, UnsupportedArchitectureError
 from ...utils.utils import check_architecture, get_distro_short_name, run
 
 

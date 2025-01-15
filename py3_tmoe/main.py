@@ -2,7 +2,7 @@
 项目的main模块
 """
 
-from .tools.utils.utils import get_distro_short_name
+from .utils.utils import get_distro_short_name
 from .ui.selection import Selection
 
 

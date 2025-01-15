@@ -6,8 +6,8 @@ from enum import Enum
 from os import path
 from time import sleep
 
-from py3_tmoe.tools.utils.app_manage import install_app
-from py3_tmoe.tools.utils.utils import get_distro_short_name, run
+from py3_tmoe.utils.app_manage import install_app
+from py3_tmoe.utils.utils import get_distro_short_name, run
 
 
 class FirefoxVariants(Enum):
@@ -92,9 +92,7 @@ class Firefox:
                 """Package: *
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
