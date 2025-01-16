@@ -4,7 +4,6 @@ This module contains some basic util functions
 
 from csv import reader
 from os import environ, path
-from pathlib import Path
 from platform import machine
 from re import search, sub
 from subprocess import CalledProcessError
@@ -61,9 +60,9 @@ def get_distro_short_name() -> list[str]:
     Returns: str
     """
 
-    release_content = (
-        Path("/etc/os-release").read_text(encoding="utf-8").replace("\n", " ")
-    )
+    release_content: str = ""
+    with open("/etc/os-release", "r", encoding="utf-8") as release:
+        release_content = " ".join(release.readlines())
 
     distro: str = ""
     debian_distro: str = ""
