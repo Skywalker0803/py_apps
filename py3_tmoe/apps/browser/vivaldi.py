@@ -2,7 +2,7 @@
 This module contains the class for managing Vivaldi browser
 """
 
-from re import match, search, escape
+from re import escape, match, search
 from typing import Literal
 
 from bs4 import BeautifulSoup
