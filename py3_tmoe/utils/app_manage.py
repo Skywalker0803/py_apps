@@ -5,7 +5,7 @@ This module provides some functions for managing sys apps
 from os import path
 from subprocess import CalledProcessError, run
 
-from .errors import UnknownPkgManagerError
+from py3_tmoe.errors.unknown_pkg_manager import UnknownPkgManagerError
 
 
 _pkg_dict: dict[str, list[str]] = {

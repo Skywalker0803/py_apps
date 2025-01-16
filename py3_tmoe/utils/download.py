@@ -2,8 +2,8 @@
 This module contains download functions for this proj
 """
 
-from py3_tmoe.tools.utils.errors import CmdNotFoundError
-from py3_tmoe.tools.utils.utils import check_cmd_exists, run
+from py3_tmoe.errors.cmd_not_found import CmdNotFoundError
+from py3_tmoe.utils.utils import check_cmd_exists, run
 
 
 def download(

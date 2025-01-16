@@ -2,14 +2,15 @@
 This module contains the class for managing Vivaldi browser
 """
 
-from re import match
+from re import match, search
 
 from bs4 import BeautifulSoup
 from requests import get
 
-from ...utils.download import download
-from ...utils.errors import DistroXOnlyError, UnsupportedArchitectureError
-from ...utils.utils import check_architecture, get_distro_short_name, run
+from py3_tmoe.errors.distro_x_only import DistroXOnlyError
+from py3_tmoe.errors.unsupported_arch import UnsupportedArchitectureError
+from py3_tmoe.utils.download import download
+from py3_tmoe.utils.utils import check_architecture, get_distro_short_name, run
 
 
 class Vivaldi:
@@ -90,3 +91,32 @@ class Vivaldi:
                 file_path=f"/tmp/vivaldi.{self.pkg_url[-3:-1]+self.pkg_url[-1]}",
                 overwrite=True,
             )
+            run(
+                cmd_args=[
+                    "sudo",
+                    "apt",
+                    "install",
+                    "-y",
+                    f"/tmp/vivaldi.{self.pkg_url[-3:-1]+self.pkg_url[-1]}",
+                ],
+                msg="when trying to install vivaldi browser in /tmp",
+            )
+
+            with open(
+                "/usr/share/applications/vivaldi-stable.desktop",
+                "w+",
+                encoding="utf-8",
+            ) as vivaldi_lnk:
+                lnk_file_content: list[str] = vivaldi_lnk.readlines()
+
+                for line in lnk_file_content:
+                    if not search("Exec=/usr/bin/vivaldi-stable", line):
+                        continue
+
+                    line = line.replace(
+                        "Exec=/usr/bin/vivaldi-stable",
+                        "Exec=/usr/bin/vivaldi-stable --no-sandbox",
+                    )
+                    break
+
+                vivaldi_lnk.writelines(vivaldi_lnk)
