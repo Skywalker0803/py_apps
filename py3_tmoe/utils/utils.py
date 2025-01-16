@@ -4,7 +4,6 @@ This module contains some basic util functions
 
 from csv import reader
 from os import environ, path
-
 from platform import machine
 from re import search, sub
 from subprocess import CalledProcessError
