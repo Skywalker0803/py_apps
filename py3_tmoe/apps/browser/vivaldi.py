@@ -2,7 +2,8 @@
 This module contains the class for managing Vivaldi browser
 """
 
-from re import match, search
+from re import match, search, escape
+from typing import Literal
 
 from bs4 import BeautifulSoup
 from requests import get
@@ -40,10 +41,12 @@ class Vivaldi:
         repo_page = BeautifulSoup(get(self.REPO_URL, timeout=5).text, "html.parser")
 
         # Find all links in download page
-        links: list[str] = repo_page.find_all("a")
+        links = repo_page.find_all("a")
 
         # Iterate the links to find the correct pkg link
-        for link in links:
+        for link_element in links:
+            link = link_element["href"]
+
             # Supported architecture for deb pkgs
             arch_is_supported_deb: bool = self.arch_type in [
                 "amd64",
@@ -55,13 +58,13 @@ class Vivaldi:
             # If the link isn't null
             if link and arch_is_supported_deb:
                 # If the link exists and is a deb link
-                if self.distro == "debian" and match(r"*.deb", link):
+                if self.distro == "debian" and search(r".[.]deb", link):
                     self.pkg_url = link.replace("amd64.deb", f"{self.arch_type}.deb")
 
                 elif (
                     self.distro == "redhat"
-                    and match(r"*.rpm", link)
-                    and match(r"*x86_64*", link)
+                    and search(r".[.]rpm", link)
+                    and search(r".x86_64.", link)
                 ):
                     if self.arch_type in ["amd64", "i386"]:
                         self.pkg_url = (
@@ -81,9 +84,6 @@ class Vivaldi:
         """
         Install vivaldi browser
         """
-
-        # cd to /tmp dir for not disturbing the user's home dir
-        run(cmd_args=["cd", "/tmp"], msg="when trying to change to /tmp dir")
 
         if self.distro in ["debian", "redhat"]:
             download(
