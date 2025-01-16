@@ -116,7 +116,7 @@ def run(cmd_args: list[str], msg: str = ""):
             "\033[91m\033[1m[Error]",
             "An error occurred!" if msg == "" else f"An error occurred {msg}",
         )
-        print(f"\033[31mError message\033[0m\n\t{err.output}")
+        print(f"\033[31mError message\033[0m\n\t{str(err)}")
 
 
 def check_architecture() -> str:

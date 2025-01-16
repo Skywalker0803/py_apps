@@ -9,7 +9,7 @@ from py3_tmoe.utils.utils import check_cmd_exists, run
 def download(
     url: str,
     file_path: str = "",
-    no_conf: bool = False,
+    no_conf: bool = True,
     overwrite: bool = False,
     check_cert: bool = False,
 ) -> None:
@@ -31,9 +31,9 @@ def download(
             "aria2c",
             "--console-log-level=info",
             "--no-conf" if no_conf else "",
-            "-k 1M",
+            *"-k 1M".split(" "),
             *"-s 5 -x 5".split(" "),
-            f"check-certificate={str(check_cert).lower()}",
+            f"--check-certificate={str(check_cert).lower()}",
             f"--allow-overwrite={str(overwrite).lower()}",
             *f"-o {file_path}".split(" "),
             url,

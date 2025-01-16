@@ -37,4 +37,4 @@ if res == "a":
         vivaldi.prepare()
         vivaldi.install()
     except DistroXOnlyError as err:
-        print(err.__str__())
+        print(str(err))
