@@ -1,4 +1,4 @@
-from py3_tmoe.apps.browser.firefox import FirefoxVariants, Firefox
+from py3_tmoe.apps.browser.firefox import Firefox, FirefoxVariants
 from py3_tmoe.ui.dialog import Dialog
 
 
