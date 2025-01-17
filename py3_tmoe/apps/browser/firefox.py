@@ -149,24 +149,6 @@ Pin-Priority: 900
         )
         if (not check_cmd_exists("firefox")) and (not check_cmd_exists("firefox-esr")):
             self._install_for_firefox()
-        else:
-            if self.DISTRO == "debian":
-                package: str = "firefox-esr"
-                run(
-                    cmd_args=[
-                        "sed",
-                        "-i",
-                        "-E",
-                        '"s@(configure)@pre\\1@"',
-                        f"/var/lib/dpkg/info/{package}.postinst",
-                    ],
-                    msg="when changing configure to preconfigure in"
-                    + f"/var/lib/dpkg/info/{package}.postinst",
-                )
-                run(
-                    cmd_args=["sudo", "dpkg", "--configure", "-a"],
-                    msg="when trying to fix misconfigured deb packages",
-                )
 
     def _install_for_firefox(self) -> None:
         """
@@ -178,25 +160,6 @@ Pin-Priority: 900
         )
         if not check_cmd_exists("firefox"):
             self._install_for_esr()
-
-        else:
-            if self.DISTRO == "debian":
-                package: str = "firefox"
-                run(
-                    cmd_args=[
-                        "sed",
-                        "-i",
-                        "-E",
-                        "s@(configure)@pre\\1@",
-                        f"/var/lib/dpkg/info/{package}.postinst",
-                    ],
-                    msg="when changing configure to preconfigure in"
-                    + f"/var/lib/dpkg/info/{package}.postinst",
-                )
-                run(
-                    cmd_args=["sudo", "dpkg", "--configure", "-a"],
-                    msg="when trying to fix misconfigured deb packages",
-                )
 
     def install(self) -> None:
         """
@@ -211,3 +174,17 @@ Pin-Priority: 900
             self._install_for_esr()
         elif self.variant == FirefoxVariants.FIREFOX:
             self._install_for_firefox()
+
+        if self.DISTRO == "debian":
+            postinst_file: str = (
+                f"/var/lib/dpkg/info/{'firefox' if self.variant == FirefoxVariants.FIREFOX else 'firefox-esr'}.postinst"
+            )
+
+            run(
+                ["sed", "-i", "-E", "s@(configure)@pre\\1@", postinst_file],
+                f"when changing configure to preconfigure in {postinst_file}",
+            )
+            run(
+                ["sudo", "dpkg", "--configure", "-a"],
+                "when trying to fix misconfigured deb packages",
+            )
