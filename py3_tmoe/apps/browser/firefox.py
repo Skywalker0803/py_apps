@@ -67,7 +67,6 @@ class Firefox:
         self.dependency_others = dep_others_dict.get(self.OTHER_DISTRO, [])
 
         if self.OTHER_DISTRO == "ubuntu":
-            self._setup_ppa_env()
             run(
                 cmd_args=[
                     "sudo",
@@ -92,9 +91,7 @@ class Firefox:
                 """Package: *
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
@@ -122,6 +119,7 @@ Pin-Priority: 900
 
         if self.OTHER_DISTRO == "ubuntu":
             self.dependency_others = ["ffmpeg", "^firefox-locale-zh-cn"]
+            self._set_ubuntu_firefox_priority()
 
         if self.DISTRO == "gentoo":
             run(cmd_args=["dispatch-conf"], msg="when running dispatch-conf")
@@ -130,6 +128,11 @@ Pin-Priority: 900
         """
         Prepare for firefox installation
         """
+
+        if self.DISTRO == "ubuntu":
+            self._setup_ppa_env()
+            self._set_ubuntu_firefox_priority()
+
         if self.variant == FirefoxVariants.FIREFOX:
             self._prepare_for_firefox()
         elif self.variant == FirefoxVariants.ESR:
@@ -156,7 +159,7 @@ Pin-Priority: 900
                         "sed",
                         "-i",
                         "-E",
-                        "'s@(configure)@pre\\1@'",
+                        "s@(configure)@pre\\1@",
                         f"/var/lib/dpkg/info/{package}.postinst",
                     ],
                     msg="when changing configure to preconfigure in"
@@ -206,7 +209,7 @@ Pin-Priority: 900
             firefox.prepare()
             firefox.install()
         """
-        if self.DISTRO == FirefoxVariants.ESR:
+        if self.variant == FirefoxVariants.ESR:
             self._install_for_esr()
-        elif self.DISTRO == FirefoxVariants.FIREFOX:
+        elif self.variant == FirefoxVariants.FIREFOX:
             self._install_for_firefox()

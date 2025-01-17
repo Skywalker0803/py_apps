@@ -4,7 +4,7 @@
 
 from py3_tmoe.apps.browser.firefox import FirefoxVariants, Firefox
 
-firefox = Firefox(FirefoxVariants.ESR)
+firefox = Firefox(FirefoxVariants.FIREFOX)
 
 firefox.prepare()
 firefox.install()
