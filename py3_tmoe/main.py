@@ -2,9 +2,8 @@
 项目的main模块
 """
 
-from py3_tmoe.apps.browser.firefox import Firefox, FirefoxVariants
+from py3_tmoe.apps.browser.vivaldi import Vivaldi
 
-firefox = Firefox(FirefoxVariants.FIREFOX)
-
-firefox.prepare()
-firefox.install()
+vivaldi = Vivaldi()
+vivaldi.prepare()
+vivaldi.install()
