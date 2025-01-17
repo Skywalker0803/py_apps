@@ -116,7 +116,7 @@ Pin-Priority: 900
 
         # Locales for ubuntu are different from other debian distros
         if self.OTHER_DISTRO == "ubuntu":
-            self.dependency_others = ["ffmpeg", "^firefox-locale-zh-"]
+            self.dependency_others = ["ffmpeg", "^firefox-locale-zh"]
 
         if self.DISTRO == "gentoo":
             run(cmd_args=["dispatch-conf"], msg="when running dispatch-conf")
@@ -179,24 +179,24 @@ Pin-Priority: 900
         if not check_cmd_exists("firefox"):
             self._install_for_esr()
 
-            # else:
-            # if self.DISTRO == "debian":
-            # package: str = "firefox"
-            # run(
-            # cmd_args=[
-            # "sed",
-            # "-i",
-            # "-E",
-            # "'s@(configure)@pre\\1@'",
-            # f"/var/lib/dpkg/info/{package}.postinst",
-            # ],
-            # msg="when changing configure to preconfigure in"
-            # + f"/var/lib/dpkg/info/{package}.postinst",
-            # )
-            # run(
-            # cmd_args=["sudo", "dpkg", "--configure", "-a"],
-            # msg="when trying to fix misconfigured deb packages",
-            # )
+        else:
+            if self.DISTRO == "debian":
+                package: str = "firefox"
+                run(
+                    cmd_args=[
+                        "sed",
+                        "-i",
+                        "-E",
+                        "s@(configure)@pre\\1@",
+                        f"/var/lib/dpkg/info/{package}.postinst",
+                    ],
+                    msg="when changing configure to preconfigure in"
+                    + f"/var/lib/dpkg/info/{package}.postinst",
+                )
+                run(
+                    cmd_args=["sudo", "dpkg", "--configure", "-a"],
+                    msg="when trying to fix misconfigured deb packages",
+                )
 
     def install(self) -> None:
         """
