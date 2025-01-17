@@ -1,3 +1,5 @@
+"""Vivaldi install"""
+
 from py3_tmoe.apps.browser.vivaldi import Vivaldi
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
 

@@ -4,6 +4,7 @@
 
 from py3_tmoe.apps.browser.vivaldi import Vivaldi
 
+
 vivaldi = Vivaldi()
 vivaldi.prepare()
 vivaldi.install()
