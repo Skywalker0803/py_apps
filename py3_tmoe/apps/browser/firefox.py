@@ -3,11 +3,10 @@ This module contains an Firefox managing class
 """
 
 from enum import Enum
-from os import path
 from time import sleep
 
 from py3_tmoe.utils.app_manage import install_app
-from py3_tmoe.utils.utils import get_distro_short_name, run
+from py3_tmoe.utils.utils import check_cmd_exists, get_distro_short_name, run
 
 
 class FirefoxVariants(Enum):
@@ -39,7 +38,8 @@ class Firefox:
         """
         Setup environment for PPA
         """
-        if not path.exists("/usr/bin/add-apt-repository"):
+
+        if not check_cmd_exists("add-apt-repository"):
             sleep(0.5)
             run(cmd_args=["apt", "update", "-y"], msg="when updating apt index")
             sleep(0.5)
@@ -63,19 +63,10 @@ class Firefox:
             "arch": ["firefox-i18n-zh-cn", "ffmpeg"],
             "suse": ["MozillaFirefox-esr-translations-common"],
         }
+
+        # Use dict.get instead of if ... elif ... to avoid pylint warnings
         self.dependency_main = dep_main_dict.get(self.DISTRO, "")
         self.dependency_others = dep_others_dict.get(self.OTHER_DISTRO, [])
-
-        if self.OTHER_DISTRO == "ubuntu":
-            run(
-                cmd_args=[
-                    "sudo",
-                    "add-apt-repository",
-                    "ppa:mozillateam/ppa",
-                    "-y",
-                ],
-                msg="when trying to add mozilla PPA to the system",
-            )
 
         if self.DISTRO == "gentoo":
             run(cmd_args=["dispatch-conf"], msg="when running dispatch-conf")
@@ -84,11 +75,13 @@ class Firefox:
         """
         This function tends to disable snap firefox by default in ubuntu
         """
+
+        # Create a file to disable snap for firefox
         with open(
             file="/etc/apt/preferences.d/90-mozilla-firefox", mode="w", encoding="utf-8"
         ) as apt_conf_file:
             apt_conf_file.writelines(
-                """Package: *
+                """Package: *\n
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
 """.split("\n", maxsplit=1)
@@ -114,12 +107,14 @@ Pin-Priority: 900
             "arch": ["firefox-i18n-zh-cn", "firefox-i18n-zh-tw"],
             "suse": ["MozillaFirefox-translations-common"],
         }
+
+        # The same, avoid pylint warnings
         self.dependency_main = dep_main_dict.get(self.DISTRO, "")
         self.dependency_others = dep_others_dict.get(self.DISTRO, [])
 
+        # Locales for ubuntu are different from other debian distros
         if self.OTHER_DISTRO == "ubuntu":
-            self.dependency_others = ["ffmpeg", "^firefox-locale-zh-cn"]
-            self._set_ubuntu_firefox_priority()
+            self.dependency_others = ["ffmpeg", "^firefox-locale-zh-"]
 
         if self.DISTRO == "gentoo":
             run(cmd_args=["dispatch-conf"], msg="when running dispatch-conf")
@@ -129,8 +124,13 @@ Pin-Priority: 900
         Prepare for firefox installation
         """
 
-        if self.DISTRO == "ubuntu":
+        # Setup mozilla PPA and snap disable for ubuntu
+        if self.OTHER_DISTRO == "ubuntu":
             self._setup_ppa_env()
+            run(
+                ["sudo", "add-apt-repository", "ppa:mozillateam/ppa", "-y"],
+                "when trying to add mozilla PPA to the system",
+            )
             self._set_ubuntu_firefox_priority()
 
         if self.variant == FirefoxVariants.FIREFOX:
@@ -143,13 +143,9 @@ Pin-Priority: 900
         Installation for ESR
         """
         install_app(
-            distro=self.DISTRO,
-            app=self.dependency_main,
-            app_dep_str=" ".join(self.dependency_others),
+            distro=self.DISTRO, apps=[self.dependency_main, *self.dependency_others]
         )
-        if (not path.exists("/usr/bin/firefox")) and (
-            not path.exists("/usr/bin/firefox-esr")
-        ):
+        if (not check_cmd_exists("firefox")) and (not check_cmd_exists("firefox-esr")):
             self._install_for_firefox()
         else:
             if self.DISTRO == "debian":
@@ -159,7 +155,7 @@ Pin-Priority: 900
                         "sed",
                         "-i",
                         "-E",
-                        "s@(configure)@pre\\1@",
+                        '"s@(configure)@pre\\1@"',
                         f"/var/lib/dpkg/info/{package}.postinst",
                     ],
                     msg="when changing configure to preconfigure in"
@@ -174,31 +170,31 @@ Pin-Priority: 900
         """
         Installation for firefox
         """
+        self._setup_ppa_env()
         install_app(
-            distro=self.DISTRO,
-            app=self.dependency_main,
-            app_dep_str=" ".join(self.dependency_others),
+            distro=self.DISTRO, apps=[self.dependency_main, *self.dependency_others]
         )
-        if not path.exists("/usr/bin/firefox"):
+        if not check_cmd_exists("firefox"):
             self._install_for_esr()
-        else:
-            if self.DISTRO == "debian":
-                package: str = "firefox"
-                run(
-                    cmd_args=[
-                        "sed",
-                        "-i",
-                        "-E",
-                        "'s@(configure)@pre\\1@'",
-                        f"/var/lib/dpkg/info/{package}.postinst",
-                    ],
-                    msg="when changing configure to preconfigure in"
-                    + f"/var/lib/dpkg/info/{package}.postinst",
-                )
-                run(
-                    cmd_args=["sudo", "dpkg", "--configure", "-a"],
-                    msg="when trying to fix misconfigured deb packages",
-                )
+
+            # else:
+            # if self.DISTRO == "debian":
+            # package: str = "firefox"
+            # run(
+            # cmd_args=[
+            # "sed",
+            # "-i",
+            # "-E",
+            # "'s@(configure)@pre\\1@'",
+            # f"/var/lib/dpkg/info/{package}.postinst",
+            # ],
+            # msg="when changing configure to preconfigure in"
+            # + f"/var/lib/dpkg/info/{package}.postinst",
+            # )
+            # run(
+            # cmd_args=["sudo", "dpkg", "--configure", "-a"],
+            # msg="when trying to fix misconfigured deb packages",
+            # )
 
     def install(self) -> None:
         """

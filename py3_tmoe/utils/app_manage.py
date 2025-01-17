@@ -2,10 +2,10 @@
 This module provides some functions for managing sys apps
 """
 
-from os import path
 from subprocess import CalledProcessError, run
 
 from py3_tmoe.errors.unknown_pkg_manager import UnknownPkgManagerError
+from py3_tmoe.utils.utils import check_cmd_exists
 
 
 _pkg_dict: dict[str, list[str]] = {
@@ -49,7 +49,7 @@ _install_opt_dict: dict[str, list[str]] = {
 }
 
 
-def install_app(distro: str, app: str, app_dep_str: str = "") -> None:
+def install_app(distro: str, apps: list[str]) -> None:
     """
     Install the appointed app and its dependencies for the given distro
 
@@ -61,8 +61,6 @@ def install_app(distro: str, app: str, app_dep_str: str = "") -> None:
     Throws: UnknownPkgManagerError
     """
 
-    app_dep: list[str] = app_dep_str.split(" ", maxsplit=1)
-
     # Declaring pkg manager & installation command & updating command & extra options
     pkg: list[str] | None = _pkg_dict.get(distro, None)
     install: str | None = _install_dict.get(distro, None)
@@ -73,11 +71,11 @@ def install_app(distro: str, app: str, app_dep_str: str = "") -> None:
         raise UnknownPkgManagerError(distro=distro)
 
     # For RedHat distros
-    if pkg[0] == "redhat" and path.exists("/usr/bin/dnf"):
+    if pkg[0] == "redhat" and check_cmd_exists("dnf"):
         pkg = ["dnf"]
 
     elif distro == "suse":
-        if path.exists("/usr/bin/zypper"):
+        if check_cmd_exists("zypper"):
             pkg = ["zypper"]
             install = "in"
             update = ""
@@ -88,9 +86,7 @@ def install_app(distro: str, app: str, app_dep_str: str = "") -> None:
         if update != "":
             run(args=[*pkg, update], check=True)
         # Execute sudo [pkg] [install] [app] [dependencies] [options]
-        run(["sudo", *pkg, install, app, *app_dep, *extra_options], check=True)
+        run(["sudo", *pkg, install, *apps, *extra_options], check=True)
     except CalledProcessError as err:
-        print(
-            f"\033[91m\033[1m[Error]\033[0m Error when installing {app} {' '.join(app_dep)}"
-        )
-        print(f"\033[31mError message\033[0m\n\t{err.output}")
+        print(f"\033[91m\033[1m[Error]\033[0m Error when installing {' '.join(apps)}")
+        print(f"\033[31mError message\033[0m\n\t{str(err)}")
