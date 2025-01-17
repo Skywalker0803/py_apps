@@ -177,7 +177,8 @@ Pin-Priority: 900
 
         if self.DISTRO == "debian":
             postinst_file: str = (
-                f"/var/lib/dpkg/info/{'firefox' if self.variant == FirefoxVariants.FIREFOX else 'firefox-esr'}.postinst"
+                "/var/lib/dpkg/info/"
+                + f"{'firefox' if self.variant == FirefoxVariants.FIREFOX else 'firefox-esr'}.postinst"
             )
 
             run(

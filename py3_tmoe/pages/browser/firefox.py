@@ -1,3 +1,5 @@
+"""Installation page for firefox"""
+
 from py3_tmoe.apps.browser.firefox import Firefox, FirefoxVariants
 from py3_tmoe.ui.dialog import Dialog
 
