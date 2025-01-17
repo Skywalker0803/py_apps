@@ -7,7 +7,7 @@ from textual.containers import Center, Container, VerticalScroll
 from textual.widgets import Button, Label
 
 
-class Selection(App):
+class Selection(App[str]):
     """
     Vertical scrollable list screen
 
