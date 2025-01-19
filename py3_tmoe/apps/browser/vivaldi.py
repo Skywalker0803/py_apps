@@ -86,7 +86,6 @@ class Vivaldi:
         """
 
         if self.DISTRO in ["debian", "redhat"]:
-
             file_path: str = f"/tmp/vivaldi.{self.pkg_url[-3:-1]+self.pkg_url[-1]}"
 
             download(url=self.pkg_url, file_path=file_path, overwrite=True)
@@ -101,25 +100,6 @@ class Vivaldi:
                     cmd_args=["sudo", "rpm", "-ivh", file_path],
                     msg="when trying to install vivaldi browser in /tmp",
                 )
-            """
-            with open(
-                "/usr/share/applications/vivaldi-stable.desktop",
-                "w+",
-                encoding="utf-8",
-            ) as vivaldi_lnk:
-                lnk_file_content: list[str] = vivaldi_lnk.readlines()
-
-                for line in lnk_file_content:
-                    if not search("Exec=/usr/bin/vivaldi-stable", line):
-                        continue
-
-                    line = line.replace(
-                        "Exec=/usr/bin/vivaldi-stable",
-                        "Exec=/usr/bin/vivaldi-stable --no-sandbox",
-                    )
-                    break
-
-                vivaldi_lnk.writelines(vivaldi_lnk)"""
 
             run(
                 cmd_args=[
