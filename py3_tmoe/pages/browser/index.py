@@ -12,8 +12,12 @@ def run() -> None:
     Run browsee selection page
     """
     selection = _Selection(
-        idlist=["firefox", "vivaldi"],
-        itemlist=["Firefox 浏览器：为自由而生", "Vivaldi 浏览器：一切皆可定制"],
+        idlist=["firefox", "vivaldi", "midori"],
+        itemlist=[
+            ":fox_face: Firefox 浏览器：为自由而生",
+            ":violin: Vivaldi 浏览器：一切皆可定制",
+            ":leafy_green: Midori 浏览器：基于Gecko的轻量级开源浏览器",
+        ],
         dialogTitle="君欲何求：选择什么浏览器",
     )
     result = selection.run()
@@ -23,3 +27,6 @@ def run() -> None:
             _firefox_or_esr()
         case "vivaldi":
             _install_vivaldi()
+        case _:
+            print("TODO")
+            exit(100)
