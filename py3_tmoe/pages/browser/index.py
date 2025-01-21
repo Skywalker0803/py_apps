@@ -2,6 +2,7 @@
 Index for browser page
 """
 
+from py3_tmoe.apps.browser.midori import Midori
 from py3_tmoe.pages.browser.firefox import firefox_or_esr as _firefox_or_esr
 from py3_tmoe.pages.browser.vivaldi import install_vivaldi as _install_vivaldi
 from py3_tmoe.ui.selection import Selection as _Selection
@@ -27,6 +28,8 @@ def run() -> None:
             _firefox_or_esr()
         case "vivaldi":
             _install_vivaldi()
+        case "midori":
+            Midori().install()
         case _:
             print("TODO")
             exit(100)
