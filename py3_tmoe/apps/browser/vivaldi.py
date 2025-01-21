@@ -26,7 +26,7 @@ class Vivaldi:
     def __init__(self) -> None:
         self.pkg_url: str = ""
 
-    def prepare(self) -> None:
+    def prepare(self):
         """
         Prepare for vivaldi installation
 
@@ -80,7 +80,9 @@ class Vivaldi:
         if self.pkg_url == "":
             raise UnsupportedArchitectureError(self._ARCH_TYPE)
 
-    def install(self) -> None:
+        return self
+
+    def install(self):
         """
         Install vivaldi browser
         """
@@ -110,3 +112,5 @@ class Vivaldi:
                 ],
                 msg="when adding no-sandbox to vivaldi",
             )
+
+        return self

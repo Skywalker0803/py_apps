@@ -2,7 +2,6 @@
 Install Midori open source browser
 """
 
-from py3_tmoe.utils.app_manage import install_app
 from py3_tmoe.utils.download import get_github_releases
 from py3_tmoe.utils.utils import get_distro_short_name
 
@@ -17,8 +16,9 @@ class Midori:
     def __init__(self) -> None:
         pass
 
-    def prepare(self) -> None:
-        pass
+    def prepare(self):
+        return self
 
-    def install(self) -> None:
+    def install(self):
         print("\n".join(get_github_releases("goastian/midori-desktop")))
+        return self

@@ -83,9 +83,7 @@ class Firefox:
                 """Package: *\n
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
@@ -120,7 +118,7 @@ Pin-Priority: 900
         if self._DISTRO == "gentoo":
             run(cmd_args=["dispatch-conf"], msg="when running dispatch-conf")
 
-    def prepare(self) -> None:
+    def prepare(self):
         """
         Prepare for firefox installation
         """
@@ -138,6 +136,8 @@ Pin-Priority: 900
             self._prepare_for_firefox()
         elif self.variant == FirefoxVariants.ESR:
             self._prepare_for_esr()
+
+        return self
 
     def _install_for_esr(self) -> None:
         """
@@ -160,7 +160,7 @@ Pin-Priority: 900
         if not check_cmd_exists("firefox"):
             self._install_for_esr()
 
-    def install(self) -> None:
+    def install(self):
         """
         The installation method of firefox
 
@@ -188,3 +188,5 @@ Pin-Priority: 900
                 ["sudo", "dpkg", "--configure", "-a"],
                 "when trying to fix misconfigured deb packages",
             )
+
+        return self

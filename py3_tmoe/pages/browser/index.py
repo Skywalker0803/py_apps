@@ -29,7 +29,7 @@ def run() -> None:
         case "vivaldi":
             _install_vivaldi()
         case "midori":
-            Midori().install()
+            Midori().prepare().install()
         case _:
             print("TODO")
             exit(100)
