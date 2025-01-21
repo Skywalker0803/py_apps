@@ -2,9 +2,14 @@
 Index for browser page
 """
 
-from py3_tmoe.apps.browser.midori import Midori
-from py3_tmoe.pages.browser.firefox import firefox_or_esr as _firefox_or_esr
-from py3_tmoe.pages.browser.vivaldi import install_vivaldi as _install_vivaldi
+import sys
+
+from py3_tmoe.apps.browser.firefox import Firefox as _Firefox
+from py3_tmoe.apps.browser.firefox import FirefoxVariants as _FirefoxVariants
+from py3_tmoe.apps.browser.midori import Midori as _Midori
+from py3_tmoe.apps.browser.vivaldi import Vivaldi as _Vivaldi
+from py3_tmoe.errors.distro_x_only import DistroXOnlyError
+from py3_tmoe.ui.dialog import Dialog as _Dialog
 from py3_tmoe.ui.selection import Selection as _Selection
 
 
@@ -25,11 +30,33 @@ def run() -> None:
 
     match result:
         case "firefox":
-            _firefox_or_esr()
+            choose: str | None = _Dialog(
+                idlist=["firefox", "esr"],
+                itemlist=["Firefox 火狐浏览器", "Firefox ESR 长期支持版"],
+                dialogTitle="Firefox 还是 ESR ？",
+            ).run()
+
+            opt: _FirefoxVariants = _FirefoxVariants.ESR
+
+            if choose == "firefox":
+                opt = _FirefoxVariants.FIREFOX
+
+            elif choose == "esr":
+                opt = _FirefoxVariants.ESR
+
+            else:
+                print(f"BUG in {__package__}")
+                sys.exit(1)
+
+            _Firefox(variant=opt).prepare().install()
         case "vivaldi":
-            _install_vivaldi()
+            try:
+                _Vivaldi().prepare().install()
+            except DistroXOnlyError as err:
+                print(str(err))
+                sys.exit(2)
         case "midori":
-            Midori().prepare().install()
+            _Midori().prepare().install()
         case _:
             print("TODO")
-            exit(100)
+            sys.exit(100)
