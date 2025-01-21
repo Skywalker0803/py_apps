@@ -67,7 +67,7 @@ test:
 	pytest
 
 run:
-	cd $(APP_DIR)/.. && python3 -m ${APP_DIR}.main
+	python3 -m ${APP_DIR}.main
 
 exp:
 	# Export dependencies for pip
