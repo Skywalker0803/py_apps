@@ -2,9 +2,7 @@
 项目的main模块
 """
 
-from py3_tmoe.apps.browser.vivaldi import Vivaldi
+from py3_tmoe.pages.browser.index import run
 
 
-vivaldi = Vivaldi()
-vivaldi.prepare()
-vivaldi.install()
+run()
