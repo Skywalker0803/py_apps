@@ -38,7 +38,7 @@ class Vivaldi:
             raise DistroXOnlyError(self._DISTRO, "debian & redhat")
 
         # Use BeautifulSoup to parse the vivaldi download page for getting the download link
-        repo_page = BeautifulSoup(get(self.REPO_URL, timeout=5).text, "html.parser")
+        repo_page = BeautifulSoup(get(self.REPO_URL, timeout=None).text, "html.parser")
 
         # Find all links in download page
         links = repo_page.find_all("a")
