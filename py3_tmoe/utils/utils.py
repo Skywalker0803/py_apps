@@ -166,6 +166,6 @@ def http_get(url: str, headers: dict | None = None):
         res = get(url=url, headers=headers, timeout=10)
     except RequestException as err:
         print(str(err))
-        sys_exit(int("request_error"))
+        sys_exit("request_error")
 
     return res

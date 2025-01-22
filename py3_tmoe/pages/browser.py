@@ -2,7 +2,7 @@
 Index for browser page
 """
 
-from sys import exit
+from sys import exit as sys_exit
 
 from py3_tmoe.apps.browser.firefox import Firefox as _Firefox
 from py3_tmoe.apps.browser.firefox import FirefoxVariants as _FirefoxVariants
@@ -46,7 +46,7 @@ def run() -> None:
 
             else:
                 print(f"BUG in {__package__}")
-                exit(1)
+                sys_exit(f"BUG in {__package__}")
 
             _Firefox(variant=opt).prepare().install()
         case "vivaldi":
@@ -54,9 +54,9 @@ def run() -> None:
                 _Vivaldi().prepare().install()
             except _DistroXOnlyError as err:
                 print(str(err))
-                exit(2)
+                sys_exit("distro x only err")
         case "midori":
             _Midori().prepare().install()
         case _:
             print("TODO")
-            exit(100)
+            sys_exit("todo")
