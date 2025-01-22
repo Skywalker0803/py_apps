@@ -84,9 +84,7 @@ class Firefox(Browser):
                 """Package: *\n
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
@@ -180,7 +178,12 @@ Pin-Priority: 900
         if self._DISTRO == "debian":
             postinst_file: str = (
                 "/var/lib/dpkg/info/"
-                + f"{'firefox' if self.variant == FirefoxVariants.FIREFOX else 'firefox-esr'}.postinst"
+                + (
+                    "firefox"
+                    if self.variant == FirefoxVariants.FIREFOX
+                    else "firefox-esr"
+                )
+                + ".postinst"
             )
 
             run(
