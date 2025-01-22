@@ -4,10 +4,8 @@ This module contains download functions for this proj
 
 from json import loads
 
-from requests import get
-
 from py3_tmoe.errors.cmd_not_found import CmdNotFoundError
-from py3_tmoe.utils.utils import check_cmd_exists, run
+from py3_tmoe.utils.utils import check_cmd_exists, http_get, run
 
 
 def download(
@@ -18,7 +16,7 @@ def download(
     check_cert: bool = False,
 ) -> None:
     """
-    Thus function is for downloading files from remote url using aria2c
+    This function is for downloading files from remote url using aria2c
 
     Params:
         str url: the remote file url
@@ -60,8 +58,11 @@ def get_github_releases(repo: str, version: str = "latest"):
         version: the version wanted, "latest" by default
     """
     json_content: dict = loads(
-        get(f"https://api.github.com/repo/{repo}/releases/{version}").text
+        http_get(
+            f"https://api.github.com/repos/{repo}/releases/{version}",
+        ).text
     )
+
     assets: list[str] = []
 
     for i in json_content["assets"]:

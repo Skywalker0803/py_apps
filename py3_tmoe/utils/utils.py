@@ -8,6 +8,10 @@ from platform import machine
 from re import search, sub
 from subprocess import CalledProcessError
 from subprocess import run as process_run
+from sys import exit
+
+from requests import get
+from requests.exceptions import RequestException
 
 from .common import architecture_aliases, distro_aliases, distro_list
 
@@ -150,3 +154,13 @@ def check_cmd_exists(cmd: str) -> bool:
     for path_item in environ["PATH"].split(":"):
         bool_value += int(path.exists(f"{path_item}/{cmd}"))
     return bool(bool_value)
+
+
+def http_get(url: str, headers: dict = {}):
+    try:
+        res = get(url=url, headers=headers)
+    except RequestException as err:
+        print(str(err))
+        exit(int("request_error"))
+
+    return res
