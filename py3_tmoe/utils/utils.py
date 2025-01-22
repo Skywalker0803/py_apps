@@ -8,7 +8,7 @@ from platform import machine
 from re import search, sub
 from subprocess import CalledProcessError
 from subprocess import run as process_run
-from sys import exit
+from sys import exit as sys_exit
 
 from requests import get
 from requests.exceptions import RequestException
@@ -156,11 +156,16 @@ def check_cmd_exists(cmd: str) -> bool:
     return bool(bool_value)
 
 
-def http_get(url: str, headers: dict = {}):
+def http_get(url: str, headers: dict | None = None):
+    """Encapsulation for requests.get with err processer"""
+
+    if headers is None:
+        headers = {}
+
     try:
-        res = get(url=url, headers=headers)
+        res = get(url=url, headers=headers, timeout=10)
     except RequestException as err:
         print(str(err))
-        exit(int("request_error"))
+        sys_exit(int("request_error"))
 
     return res
