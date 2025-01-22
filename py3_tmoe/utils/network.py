@@ -3,9 +3,13 @@ This module contains download functions for this proj
 """
 
 from json import loads
+from sys import exit as sys_exit
+
+from requests import get
+from requests.exceptions import RequestException
 
 from py3_tmoe.errors.cmd_not_found import CmdNotFoundError
-from py3_tmoe.utils.utils import check_cmd_exists, http_get, run
+from py3_tmoe.utils.utils import check_cmd_exists, run
 
 
 def download(
@@ -69,3 +73,19 @@ def get_github_releases(repo: str, version: str = "latest"):
         assets.append(i["browser_download_url"])
 
     return assets
+
+
+def http_get(url: str, headers: dict | None = None):
+    """
+    Encapsulation for requests.get with err processer
+    """
+
+    if headers is None:
+        headers = {}
+    try:
+        res = get(url=url, headers=headers, timeout=10)
+    except RequestException as err:
+        print(str(err))
+        sys_exit("request_error")
+
+    return res
