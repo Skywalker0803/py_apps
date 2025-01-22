@@ -7,13 +7,14 @@ from re import search
 from bs4 import BeautifulSoup
 from requests import get
 
+from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
 from py3_tmoe.errors.unsupported_arch import UnsupportedArchitectureError
 from py3_tmoe.utils.download import download
 from py3_tmoe.utils.utils import check_architecture, get_distro_short_name, run
 
 
-class Vivaldi:
+class Vivaldi(Browser):
     """
     This class for managing Vivaldi browser
     """
@@ -26,7 +27,7 @@ class Vivaldi:
     def __init__(self) -> None:
         self.pkg_url: str = ""
 
-    def prepare(self):
+    def prepare(self) -> Browser:
         """
         Prepare for vivaldi installation
 
@@ -82,7 +83,7 @@ class Vivaldi:
 
         return self
 
-    def install(self):
+    def install(self) -> Browser:
         """
         Install vivaldi browser
         """

@@ -5,6 +5,7 @@ This module contains an Firefox managing class
 from enum import Enum
 from time import sleep
 
+from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.utils.app_manage import install_app
 from py3_tmoe.utils.utils import check_cmd_exists, get_distro_short_name, run
 
@@ -18,7 +19,7 @@ class FirefoxVariants(Enum):
     ESR = "esr"
 
 
-class Firefox:
+class Firefox(Browser):
     """
     The class for managing firefox
 
@@ -120,7 +121,7 @@ Pin-Priority: 900
         if self._DISTRO == "gentoo":
             run(cmd_args=["dispatch-conf"], msg="when running dispatch-conf")
 
-    def prepare(self):
+    def prepare(self) -> Browser:
         """
         Prepare for firefox installation
         """
@@ -162,7 +163,7 @@ Pin-Priority: 900
         if not check_cmd_exists("firefox"):
             self._install_for_esr()
 
-    def install(self):
+    def install(self) -> Browser:
         """
         The installation method of firefox
 
