@@ -4,24 +4,9 @@ This module contains some basic util functions
 
 from csv import reader
 from platform import machine
-from re import search, sub
+from re import search
 
 from .common import architecture_aliases, distro_aliases, distro_list
-
-
-def to_snakecase(string: str) -> str:
-    """
-    Change the given string to the from of a_b_c (Snake Case)
-
-    Params:
-        str string: the input string
-    """
-
-    return "_".join(
-        sub(
-            "([A-Z][a-z]+)", r" \1", sub("([A-Z]+)", r" \1", string.replace("-", " "))
-        ).split()
-    ).lower()
 
 
 def get_distro_fullname() -> str:
