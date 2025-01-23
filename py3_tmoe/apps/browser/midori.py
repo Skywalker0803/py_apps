@@ -2,12 +2,15 @@
 Install Midori open source browser
 """
 
+from sys import exit as sys_exit
+
 from re import search
 
 from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
 from py3_tmoe.errors.unsupported_arch import UnsupportedArchitectureError
-from py3_tmoe.utils.network import get_github_releases
+from py3_tmoe.utils.cmd import run
+from py3_tmoe.utils.network import download, get_github_releases
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
 
 
@@ -45,7 +48,7 @@ class Midori(Browser):
 
             case "arch":
                 for i in releases:
-                    if search("-x86_64[.]pkg[.]tar[.][.]zst", i):
+                    if search(".x86_64[.]pkg[.]tar[.]zst", i):
                         self.pkg_link = i
                         break
 
@@ -62,4 +65,25 @@ class Midori(Browser):
 
     def install(self) -> Browser:
         print(self.pkg_link)
+
+        file_path: str = f"/tmp/midori.{self.pkg_link[-3:-1]+self.pkg_link[-1]}"
+
+        install_err_msg: str = f"when trying to install midori package in {file_path}"
+
+        download(self.pkg_link, file_path, overwrite=True)
+
+        match self._DISTRO:
+            case "debian":
+                run(["sudo", "apt", "install", "-y", file_path], msg=install_err_msg)
+            case "redhat":
+                run(["sudo", "rpm", "-ivh", file_path], msg=install_err_msg)
+            case "arch":
+                run(
+                    ["sudo", "pacman", "-U", "--noconfirm", "--needed"],
+                    msg=install_err_msg,
+                )
+
+            case _:
+                sys_exit(f"BUG in midori installer class at {__package__}")
+
         return self

@@ -89,30 +89,29 @@ class Vivaldi(Browser):
         Install vivaldi browser
         """
 
-        if self._DISTRO in ["debian", "redhat"]:
-            file_path: str = f"/tmp/vivaldi.{self.pkg_url[-3:-1]+self.pkg_url[-1]}"
+        file_path: str = f"/tmp/vivaldi.{self.pkg_url[-3:-1]+self.pkg_url[-1]}"
 
-            download(url=self.pkg_url, file_path=file_path, overwrite=True)
-            if self._DISTRO == "debian":
-                run(
-                    cmd_args=["sudo", "apt", "install", "-y", file_path],
-                    msg="when trying to install vivaldi browser in /tmp",
-                )
-
-            elif self._DISTRO == "redhat":
-                run(
-                    cmd_args=["sudo", "rpm", "-ivh", file_path],
-                    msg="when trying to install vivaldi browser in /tmp",
-                )
-
+        download(url=self.pkg_url, file_path=file_path, overwrite=True)
+        if self._DISTRO == "debian":
             run(
-                cmd_args=[
-                    "sed",
-                    "-i",
-                    "s@Exec=/usr/bin/vivaldi-stable@& --no-sandbox@g",
-                    "/usr/share/applications/vivaldi-stable.desktop",
-                ],
-                msg="when adding no-sandbox to vivaldi",
+                cmd_args=["sudo", "apt", "install", "-y", file_path],
+                msg="when trying to install vivaldi browser in /tmp",
             )
+
+        elif self._DISTRO == "redhat":
+            run(
+                cmd_args=["sudo", "rpm", "-ivh", file_path],
+                msg="when trying to install vivaldi browser in /tmp",
+            )
+
+        run(
+            cmd_args=[
+                "sed",
+                "-i",
+                "s@Exec=/usr/bin/vivaldi-stable@& --no-sandbox@g",
+                "/usr/share/applications/vivaldi-stable.desktop",
+            ],
+            msg="when adding no-sandbox to vivaldi",
+        )
 
         return self
