@@ -32,21 +32,31 @@ def download(
     if not check_cmd_exists("aria2c"):
         raise CmdNotFoundError("aria2c")
 
+    # Parse the file_path as path and filename
     ls_of_file_and_path: list[str] = file_path.split("/")
     ls_of_file_and_path.pop(0)
 
     run(
         [
             "aria2c",
+            # Set log level to "info"
             "--console-log-level=info",
+            # Ignore global config file
             "--no-conf" if no_conf else "",
-            *"-k 5M".split(" "),
+            # Set chunk size to 10 MiB
+            *"-k 10M".split(" "),
+            # Set process number to 5
+            # an average between anti-scrap policy and download speed
             *"-s 5 -x 5".split(" "),
+            # Disable check cert
             f"--check-certificate={str(check_cert).lower()}",
+            # Allow overwrite or else it'll be like a.txt.1, a.txt.2 ...
             f"--allow-overwrite={str(overwrite).lower()}",
+            # Set output file path to file_path
             "-o",
             "/".join(ls_of_file_and_path),
             *"-d /".split(" "),
+            # Download URL
             url,
         ],
         f"when downloading {url} to {file_path}",
@@ -69,6 +79,17 @@ def get_github_releases(repo: str, version: str = "latest"):
 
     assets: list[str] = []
 
+    # The data structure was like:
+    # {
+    #   ...
+    #   "assets": [
+    #       {
+    #           ...
+    #           "browser_download_url": "..."
+    #       },
+    #       ...
+    #   ],
+    # }
     for i in json_content["assets"]:
         assets.append(i["browser_download_url"])
 
@@ -81,6 +102,7 @@ def http_get(url: str, headers: dict | None = None):
     """
 
     if headers is None:
+        # Fix "dangerous" default value {}
         headers = {}
     try:
         res = get(url=url, headers=headers, timeout=10)
