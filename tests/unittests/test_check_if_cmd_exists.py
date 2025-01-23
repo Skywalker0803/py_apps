@@ -1,4 +1,4 @@
-from py3_tmoe.utils.utils import check_cmd_exists
+from py3_tmoe.utils.cmd import check_cmd_exists
 
 
 def test_check_if_cmd_exists():
