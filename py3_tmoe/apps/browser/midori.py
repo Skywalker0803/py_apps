@@ -8,7 +8,7 @@ from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
 from py3_tmoe.errors.unsupported_arch import UnsupportedArchitectureError
 from py3_tmoe.utils.network import get_github_releases
-from py3_tmoe.utils.utils import check_architecture, get_distro_short_name
+from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
 
 
 class Midori(Browser):
