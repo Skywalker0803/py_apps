@@ -2,9 +2,8 @@
 Install Midori open source browser
 """
 
-from sys import exit as sys_exit
-
 from re import search
+from sys import exit as sys_exit
 
 from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
