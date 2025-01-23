@@ -9,7 +9,7 @@ from requests import get
 from requests.exceptions import RequestException
 
 from py3_tmoe.errors.cmd_not_found import CmdNotFoundError
-from py3_tmoe.utils.utils import check_cmd_exists, run
+from py3_tmoe.utils.cmd import check_cmd_exists, run
 
 
 def download(

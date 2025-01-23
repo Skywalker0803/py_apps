@@ -5,7 +5,7 @@ This module provides some functions for managing sys apps
 from subprocess import CalledProcessError, run
 
 from py3_tmoe.errors.unknown_pkg_manager import UnknownPkgManagerError
-from py3_tmoe.utils.utils import check_cmd_exists
+from py3_tmoe.utils.cmd import check_cmd_exists
 
 
 _pkg_dict: dict[str, list[str]] = {
