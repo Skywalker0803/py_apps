@@ -1,5 +1,5 @@
 """
-This module contains some basic util functions
+This module contains some basic sys level funcs
 """
 
 from csv import reader
