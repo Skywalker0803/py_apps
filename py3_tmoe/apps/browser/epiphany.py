@@ -2,8 +2,9 @@
 This is the module for Epiphany Browser (A.K.A. GNOME Web)
 """
 
-from .common import Browser
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
+
+from .common import Browser
 
 
 class Epiphany(Browser):
