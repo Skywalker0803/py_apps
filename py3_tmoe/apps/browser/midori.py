@@ -7,7 +7,6 @@ from sys import exit as sys_exit
 
 from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
-from py3_tmoe.errors.unsupported_arch import UnsupportedArchitectureError
 from py3_tmoe.utils.cmd import run
 from py3_tmoe.utils.network import download, get_github_releases
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
@@ -28,42 +27,44 @@ class Midori(Browser):
         self.pkg_link: str = ""
 
     def prepare(self) -> Browser:
+        # Get the latest releases list from GitHub API
         releases: list[str] = get_github_releases(self.repo_path)
 
-        match self._DISTRO:
-            case "debian":
-                for i in releases:
-                    if (search("._arm64[.]deb", i) and self._ARCH == "arm64") or (
-                        search("._amd64[.]deb", i) and self._ARCH == "amd64"
-                    ):
-                        self.pkg_link = i
-                        break
-
-            case "redhat":
-                for i in releases:
-                    if search(".[.]x86_64[.]rpm", i) and self._ARCH == "amd64":
-                        self.pkg_link = i
-                        break
-
-            case "arch":
-                for i in releases:
-                    if search(".x86_64[.]pkg[.]tar[.]zst", i):
-                        self.pkg_link = i
-                        break
-
-            case _:
-                raise DistroXOnlyError(
-                    self._DISTRO,
-                    "debian arm64/amd64 & redhat amd64 & arch amd64",
+        for i in releases:
+            if (
+                # For debian arm64 & debian amd64
+                (
+                    self._DISTRO == "debian"
+                    and (self._ARCH in ["arm64", "amd64"])
+                    and search(f"._{self._ARCH}[.]deb", i)
                 )
+                # For rhel amd64
+                or (
+                    self._DISTRO == "redhat"
+                    and self._ARCH == "amd64"
+                    and search(".[.]x86_64[.]rpm", i)
+                )
+                # For arch amd64
+                or (
+                    self._DISTRO == "arch"
+                    and self._ARCH == "amd64"
+                    and search(".x86_64[.]pkg[.]tar[.]zst", i)
+                )
+            ):
+                self.pkg_link = i
+                break
 
         if self.pkg_link == "":
-            raise UnsupportedArchitectureError(self._ARCH)
+            raise DistroXOnlyError(
+                self._DISTRO,
+                "debian arm64/amd64 & redhat amd64 & arch amd64",
+            )
 
         return self
 
     def install(self) -> Browser:
-        print(self.pkg_link)
+        ## Debug msg
+        # print(self.pkg_link)
 
         file_path: str = f"/tmp/midori.{self.pkg_link[-3:-1]+self.pkg_link[-1]}"
 
