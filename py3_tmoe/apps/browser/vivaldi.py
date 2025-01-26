@@ -28,7 +28,7 @@ class Vivaldi(Browser):
 
     def __init__(self) -> None:
         self.pkg_url: str = ""
-        self.use_sys_pkg_manager: bool = True if self._DISTRO == "gentoo" else False
+        self.use_sys_pkg_manager: bool = self._DISTRO == "gentoo"
 
     def prepare(self) -> Browser:
         """
@@ -102,11 +102,8 @@ class Vivaldi(Browser):
 
         # Download the package from website except
         # when use_sys_pkg_manager is True
-        (
+        if not self.use_sys_pkg_manager:
             download(url=self.pkg_url, file_path=file_path, overwrite=True)
-            if self.use_sys_pkg_manager is False
-            else None
-        )
 
         # For deb based distros
         if self._DISTRO == "debian":

@@ -31,26 +31,28 @@ class Midori(Browser):
         releases: list[str] = get_github_releases(self.repo_path)
 
         for i in releases:
-            if (
-                # For debian arm64 & debian amd64
-                (
-                    self._DISTRO == "debian"
-                    and (self._ARCH in ["arm64", "amd64"])
-                    and search(f"._{self._ARCH}[.]deb", i)
-                )
-                # For rhel amd64
-                or (
-                    self._DISTRO == "redhat"
-                    and self._ARCH == "amd64"
-                    and search(".[.]x86_64[.]rpm", i)
-                )
-                # For arch amd64
-                or (
-                    self._DISTRO == "arch"
-                    and self._ARCH == "amd64"
-                    and search(".x86_64[.]pkg[.]tar[.]zst", i)
-                )
-            ):
+            # For debian arm64 & debian amd64
+            match_deb: bool = bool(
+                self._DISTRO == "debian"
+                and (self._ARCH in ["arm64", "amd64"])
+                and search(f"._{self._ARCH}[.]deb", i)
+            )
+
+            # For rhel amd64
+            match_rpm: bool = bool(
+                self._DISTRO == "redhat"
+                and self._ARCH == "amd64"
+                and search(".[.]x86_64[.]rpm", i)
+            )
+
+            # For arch amd64
+            match_archlinux: bool = bool(
+                self._DISTRO == "arch"
+                and self._ARCH == "amd64"
+                and search(".x86_64[.]pkg[.]tar[.]zst", i)
+            )
+
+            if match_deb or match_rpm or match_archlinux:
                 self.pkg_link = i
                 break
 
