@@ -10,10 +10,10 @@ from requests import get
 from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
 from py3_tmoe.errors.unsupported_arch import UnsupportedArchitectureError
-from py3_tmoe.utils.app_manage import install_app
 from py3_tmoe.utils.cmd import run
 from py3_tmoe.utils.network import download
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
+from py3_tmoe.utils.app_manage import install_app
 
 
 class Vivaldi(Browser):
@@ -97,29 +97,34 @@ class Vivaldi(Browser):
         Install vivaldi browser
         """
 
+        # Let the file path be /tmp/vivaldi.{Package name extension by distro}
         file_path: str = f"/tmp/vivaldi.{self.pkg_url[-3:-1]+self.pkg_url[-1]}"
 
-        (
-            download(url=self.pkg_url, file_path=file_path, overwrite=True)
-            if self.use_sys_pkg_manager is False
-            else None
-        )
+        # Download the package from website except
+        # when use_sys_pkg_manager is True
+        download(
+            url=self.pkg_url, file_path=file_path, overwrite=True
+        ) if self.use_sys_pkg_manager is False else None
 
+        # For deb based distros
         if self._DISTRO == "debian":
             run(
                 cmd_args=["sudo", "apt", "install", "-y", file_path],
                 msg="when trying to install vivaldi browser in /tmp",
             )
 
+        # For rhel based distros
         elif self._DISTRO == "redhat":
             run(
                 cmd_args=["sudo", "rpm", "-ivh", file_path],
                 msg="when trying to install vivaldi browser in /tmp",
             )
 
+        # If distro is based on gentoo, install pkg from repo
         elif self._DISTRO == "gentoo":
             install_app(self._DISTRO, [self.pkg_url])
 
+        # Add "--no-sandbox" to application launcher
         run(
             cmd_args=[
                 "sed",
