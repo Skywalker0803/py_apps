@@ -4,6 +4,7 @@ Index for browser page
 
 from sys import exit as sys_exit
 
+from py3_tmoe.apps.browser.epiphany import Epiphany as _Epiphany
 from py3_tmoe.apps.browser.firefox import Firefox as _Firefox
 from py3_tmoe.apps.browser.firefox import FirefoxVariants as _FirefoxVariants
 from py3_tmoe.apps.browser.midori import Midori as _Midori
@@ -18,11 +19,12 @@ def run() -> None:
     Run browsee selection page
     """
     selection = _Selection(
-        idlist=["firefox", "vivaldi", "midori"],
+        idlist=["firefox", "vivaldi", "midori", "epiphany"],
         itemlist=[
             ":fox_face: Firefox 浏览器：为自由而生",
             ":violin: Vivaldi 浏览器：一切皆可定制",
             ":leafy_green: Midori 浏览器：基于Gecko的轻量级开源浏览器",
+            ":globe_with_meridians: GNOME Web：GNOME自带，又称Epiphany",
         ],
         dialogTitle="君欲何求：选择什么浏览器",
     )
@@ -57,6 +59,9 @@ def run() -> None:
                 sys_exit("distro x only err")
         case "midori":
             _Midori().prepare().install()
+
+        case "epiphany":
+            _Epiphany().prepare().install()
         case _:
             print("TODO")
             sys_exit("todo")

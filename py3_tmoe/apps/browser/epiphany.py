@@ -3,6 +3,7 @@ This is the module for Epiphany Browser (A.K.A. GNOME Web)
 """
 
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
+from py3_tmoe.utils.app_manage import install_app
 
 from .common import Browser
 
@@ -29,4 +30,5 @@ class Epiphany(Browser):
         return self
 
     def install(self) -> Browser:
+        install_app(self._DISTRO, [self.pkg])
         return self
