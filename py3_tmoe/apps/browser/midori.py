@@ -81,7 +81,7 @@ class Midori(Browser):
                 run(["sudo", "rpm", "-ivh", file_path], msg=install_err_msg)
             case "arch":
                 run(
-                    ["sudo", "pacman", "-U", "--noconfirm", "--needed"],
+                    ["sudo", "pacman", "-U", file_path, "--noconfirm", "--needed"],
                     msg=install_err_msg,
                 )
 
