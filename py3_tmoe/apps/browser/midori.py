@@ -65,7 +65,7 @@ class Midori(Browser):
         return self
 
     def install(self) -> Browser:
-        ## Debug msg
+        # Debug msg
         # print(self.pkg_link)
 
         file_path: str = f"/tmp/midori.{self.pkg_link[-3:-1]+self.pkg_link[-1]}"
