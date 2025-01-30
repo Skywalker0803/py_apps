@@ -58,11 +58,13 @@ class Firefox(Browser):
             "arch": "firefox-esr",
             "gentoo": "www-client/firefox",
             "suse": "MozillaFirefox-esr",
+            "void": "firefox-esr",
         }
         dep_others_dict: dict[str, list[str]] = {
             "debian": ["ffmpeg", "firefox-esr-locale-zh-hans"],
             "arch": ["firefox-i18n-zh-cn", "ffmpeg"],
             "suse": ["MozillaFirefox-esr-translations-common"],
+            "void": ["firefox-esr-i18n-zh-CN", "firefox-esr-i18n-zh-TW"],
         }
 
         # Use dict.get instead of if ... elif ... to avoid pylint warnings
@@ -85,9 +87,7 @@ class Firefox(Browser):
                 """Package: *\n
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
@@ -104,11 +104,13 @@ Pin-Priority: 900
             "redhat": "firefox",
             "gentoo": "www-client/firefox-bin",
             "suse": "MozillaFirefox",
+            "void": "firefox",
         }
         dep_others_dict: dict[str, list[str]] = {
             "debian": ["firefox-l10n-zh-cn"],
             "arch": ["firefox-i18n-zh-cn", "firefox-i18n-zh-tw"],
             "suse": ["MozillaFirefox-translations-common"],
+            "void": ["firefox-i18n-zh-CN", "firefox-i18n-zh-TW"],
         }
 
         # The same, avoid pylint warnings
