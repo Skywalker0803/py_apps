@@ -3,6 +3,8 @@ Falkon Browser
 """
 
 from py3_tmoe.apps.browser.common import Browser
+from py3_tmoe.errors.distro_x_only import DistroXOnlyError
+from py3_tmoe.utils.app_manage import install_app
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
 
 
@@ -14,13 +16,23 @@ class Falkon(Browser):
 
     def __init__(self) -> None:
         self.pkg: str = ""
+        self._pkg_dict: dict[str, str] = {
+            "debian": "falkon",
+            "redhat": "falkon",
+            "arch": "falkon",
+            "gentoo": "www-client/falkon",
+        }
 
     def prepare(self) -> Browser:
-        match self._DISTRO:
-            case "debian":
-                self.pkg = "falkon"
+        self.pkg = self._pkg_dict.get(self._DISTRO, "")
+        if self.pkg == "":
+            raise DistroXOnlyError(
+                self._DISTRO,
+                "Debian & RHEL & Archlinux & Gentoo",
+            )
 
         return self
 
     def install(self) -> Browser:
+        install_app(self._DISTRO, [self.pkg])
         return self
