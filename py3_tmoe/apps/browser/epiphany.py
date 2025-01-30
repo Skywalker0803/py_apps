@@ -21,13 +21,17 @@ class Epiphany(Browser):
             "redhat": "epiphany",
             "arch": "epiphany",
             "gentoo": "www-client/epiphany",
+            "void": "epiphany",
         }
 
     def prepare(self) -> Browser:
         self.pkg = self._pkg_dict.get(self._DISTRO, "")
 
         if self.pkg == "":
-            raise DistroXOnlyError(self._DISTRO, "Debian & RHEL & Archlinux & Gentoo")
+            raise DistroXOnlyError(
+                self._DISTRO,
+                "Debian & RHEL & Archlinux & Gentoo & Void Linux",
+            )
         return self
 
     def install(self) -> Browser:

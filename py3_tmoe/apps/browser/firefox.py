@@ -6,6 +6,7 @@ from enum import Enum
 from time import sleep
 
 from py3_tmoe.apps.browser.common import Browser
+from py3_tmoe.errors.distro_x_only import DistroXOnlyError
 from py3_tmoe.utils.app_manage import install_app
 from py3_tmoe.utils.cmd import check_cmd_exists, run
 from py3_tmoe.utils.sys import get_distro_short_name
@@ -87,13 +88,16 @@ class Firefox(Browser):
                 """Package: *\n
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
                 msg='when trying to give permission to "/etc/apt/preferences.d/90-mozilla-firefox"',
+            )
+
+        if self.dependency_main == "" or self.dependency_others == []:
+            raise DistroXOnlyError(
+                self._DISTRO, "Debian & Archlinux & RHEL & SUSE & Void Linux"
             )
 
     def _prepare_for_firefox(self) -> None:
@@ -125,6 +129,11 @@ Pin-Priority: 900
 
         if self._DISTRO == "gentoo":
             run(cmd_args=["dispatch-conf"], msg="when running dispatch-conf")
+
+        if self.dependency_main == "" or self.dependency_others == []:
+            raise DistroXOnlyError(
+                self._DISTRO, "Debian & Archlinux & RHEL & SUSE & Void Linux"
+            )
 
     def prepare(self) -> Browser:
         """
