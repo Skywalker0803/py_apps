@@ -5,7 +5,7 @@ This module contains download functions for this proj
 from json import loads
 from sys import exit as sys_exit
 
-from requests import get
+from requests import get as req_get
 from requests.exceptions import RequestException
 
 from py3_tmoe.errors.cmd_not_found import CmdNotFoundError
@@ -72,7 +72,7 @@ def get_github_releases(repo: str, version: str = "latest"):
         version: the version wanted, "latest" by default
     """
     json_content: dict = loads(
-        http_get(
+        get(
             f"https://api.github.com/repos/{repo}/releases/{version}",
         ).text
     )
@@ -96,7 +96,7 @@ def get_github_releases(repo: str, version: str = "latest"):
     return assets
 
 
-def http_get(url: str, headers: dict | None = None):
+def get(url: str, headers: dict | None = None):
     """
     Encapsulation for requests.get with err processer
     """
@@ -105,7 +105,7 @@ def http_get(url: str, headers: dict | None = None):
         # Fix "dangerous" default value {}
         headers = {}
     try:
-        res = get(url=url, headers=headers, timeout=10)
+        res = req_get(url=url, headers=headers, timeout=10)
     except RequestException as err:
         print(str(err))
         sys_exit("request_error")

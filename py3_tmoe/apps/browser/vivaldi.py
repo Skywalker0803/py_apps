@@ -5,7 +5,9 @@ This module contains the class for managing Vivaldi browser
 from re import search
 
 from bs4 import BeautifulSoup
-from requests import get
+
+
+from py3_tmoe.utils.network import get
 
 from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
@@ -45,7 +47,7 @@ class Vivaldi(Browser):
             raise DistroXOnlyError(self._DISTRO, "Debian & RHEL & Gentoo & Void Linux")
 
         # Use BeautifulSoup to parse the vivaldi download page for getting the download link
-        repo_page = BeautifulSoup(get(self.REPO_URL, timeout=None).text, "html.parser")
+        repo_page = BeautifulSoup(get(self.REPO_URL).text, "html.parser")
 
         # Find all links in download page
         links = repo_page.find_all("a")
