@@ -6,15 +6,12 @@ from re import search
 
 from bs4 import BeautifulSoup
 
-
-from py3_tmoe.utils.network import get
-
 from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
 from py3_tmoe.errors.unsupported_arch import UnsupportedArchitectureError
 from py3_tmoe.utils.app_manage import install_app
 from py3_tmoe.utils.cmd import run
-from py3_tmoe.utils.network import download
+from py3_tmoe.utils.network import download, get
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
 
 
