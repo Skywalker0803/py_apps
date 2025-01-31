@@ -29,7 +29,7 @@ class Falkon(Browser):
         if self.pkg == "":
             raise DistroXOnlyError(
                 self._DISTRO,
-                "Debian & RHEL & Archlinux & Gentoo & Void Linux",
+                "Debian & RHEL & Archlinux & Void Linux & Gentoo",
             )
 
         return self
