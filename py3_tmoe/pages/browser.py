@@ -26,7 +26,7 @@ def run() -> None:
             ":leafy_green: Midori 浏览器：基于Gecko的轻量级开源浏览器",
             ":globe_with_meridians: GNOME Web：GNOME自带，又称Epiphany",
         ],
-        dialogTitle="君欲何求：选择什么浏览器",
+        dialog_title="君欲何求：选择什么浏览器",
     )
     result = selection.run()
 
@@ -35,7 +35,7 @@ def run() -> None:
             choose: str | None = _Dialog(
                 idlist=["firefox", "esr"],
                 itemlist=["Firefox 火狐浏览器", "Firefox ESR 长期支持版"],
-                dialogTitle="Firefox 还是 ESR ？",
+                dialog_title="Firefox 还是 ESR ？",
             ).run()
 
             opt: _FirefoxVariants = _FirefoxVariants.ESR

@@ -15,7 +15,7 @@ class Dialog(App[str]):
     Params:
         list[str] idlist: list of id for returning the selected item
         list[str] itemlist: item list, support Console Markup
-        str dialogTitle: the title of the dialog
+        str dialog_title: the title of the dialog
     """
 
     CSS_PATH = "dialog.tcss"
@@ -24,14 +24,14 @@ class Dialog(App[str]):
         self,
         idlist: list[str],
         itemlist: list[str],
-        dialogTitle: str = "",
+        dialog_title: str = "",
     ):
         super().__init__()
 
         # Declare the id list, list of items & title
         self.idlist = idlist
         self.itemlist = itemlist
-        self.title = dialogTitle
+        self.title = dialog_title
 
         # Setup button list for manipulating the button's width
         self.buttonlist: list[Button] = []

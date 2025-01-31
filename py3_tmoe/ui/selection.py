@@ -19,7 +19,7 @@ class Selection(App[str]):
     Type:
         idlist: List[str]
         itemlist: List[str]
-        dialogTitle: str
+        dialog_title: str
     """
 
     CSS_PATH = "selection.tcss"
@@ -28,14 +28,14 @@ class Selection(App[str]):
         self,
         idlist: list[str],
         itemlist: list[str],
-        dialogTitle: str,
+        dialog_title: str,
     ):
         super().__init__()
 
         # Declare id list & item list & title of the dialog
         self.idlist = idlist
         self.itemlist = itemlist
-        self.title = dialogTitle
+        self.title = dialog_title
 
     def compose(self) -> ComposeResult:
         """
