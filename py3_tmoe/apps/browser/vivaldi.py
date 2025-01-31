@@ -42,7 +42,7 @@ class Vivaldi(Browser):
             self._DISTRO not in ["debian", "redhat"]
             and self.use_sys_pkg_manager is False
         ):
-            raise DistroXOnlyError(self._DISTRO, "Debian & RHEL")
+            raise DistroXOnlyError(self._DISTRO, "Debian & RHEL & Gentoo & Void Linux")
 
         # Use BeautifulSoup to parse the vivaldi download page for getting the download link
         repo_page = BeautifulSoup(get(self.REPO_URL, timeout=None).text, "html.parser")
