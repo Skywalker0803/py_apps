@@ -21,6 +21,7 @@ class Falkon(Browser):
             "redhat": "falkon",
             "arch": "falkon",
             "gentoo": "www-client/falkon",
+            "void": "falkon",
         }
 
     def prepare(self) -> Browser:
@@ -28,7 +29,7 @@ class Falkon(Browser):
         if self.pkg == "":
             raise DistroXOnlyError(
                 self._DISTRO,
-                "Debian & RHEL & Archlinux & Gentoo",
+                "Debian & RHEL & Archlinux & Gentoo & Void Linux",
             )
 
         return self
