@@ -127,8 +127,8 @@ class Vivaldi(Browser):
                 msg="when trying to install vivaldi browser in /tmp",
             )
 
-        # If distro is based on gentoo, install pkg from repo
-        elif self._DISTRO == "gentoo":
+        # If distro is based on gentoo / void, install pkg from repo
+        elif self.use_sys_pkg_manager:
             install_app(self._DISTRO, [self.pkg_url])
 
         # Add "--no-sandbox" to application launcher
