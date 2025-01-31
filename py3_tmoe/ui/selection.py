@@ -12,14 +12,9 @@ class Selection(App[str]):
     Vertical scrollable list screen
 
     Params:
-        idlist: the id of list item, for getting the selected item id
-        itemlist: content list, supports Console Markup
-        dialogTitle: the title of dialog
-
-    Type:
-        idlist: List[str]
-        itemlist: List[str]
-        dialog_title: str
+        list[str] idlist: the id of list item, for getting the selected item id
+        list[str] itemlist: content list, supports Console Markup
+        str dialogTitle: the title of dialog
     """
 
     CSS_PATH = "selection.tcss"
