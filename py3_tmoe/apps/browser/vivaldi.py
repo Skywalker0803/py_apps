@@ -28,7 +28,7 @@ class Vivaldi(Browser):
 
     def __init__(self) -> None:
         self.pkg_url: str = ""
-        self.use_sys_pkg_manager: bool = self._DISTRO == "gentoo"
+        self.use_sys_pkg_manager: bool = self._DISTRO in ["gentoo", "void"]
 
     def prepare(self) -> Browser:
         """
@@ -42,7 +42,7 @@ class Vivaldi(Browser):
             self._DISTRO not in ["debian", "redhat"]
             and self.use_sys_pkg_manager is False
         ):
-            raise DistroXOnlyError(self._DISTRO, "debian & redhat")
+            raise DistroXOnlyError(self._DISTRO, "Debian & RHEL")
 
         # Use BeautifulSoup to parse the vivaldi download page for getting the download link
         repo_page = BeautifulSoup(get(self.REPO_URL, timeout=None).text, "html.parser")
@@ -85,6 +85,14 @@ class Vivaldi(Browser):
 
                 elif self._DISTRO == "gentoo":
                     self.pkg_url = "www-client/vivaldi-snapshot"
+
+                _pkg_dict: dict[str, str] = {
+                    "gentoo": "www-client/vivaldi-snapshot",
+                    "void": "vivaldi",
+                }
+
+                if self.use_sys_pkg_manager:
+                    self.pkg_url = _pkg_dict.get(self._DISTRO, "")
 
         # Raise an error if there's no found url matches the conditions
         if self.pkg_url == "":
