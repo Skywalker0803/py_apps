@@ -1,8 +1,8 @@
 Screen {
-  layout: grid;
-  grid-size: 1 2;
-  grid-gutter:2;
-  padding:2 1;
+    layout: grid;
+    grid-size: 1 2;
+    grid-gutter: 2;
+    padding: 2 1;
 }
 Label {
     width: 100%;
