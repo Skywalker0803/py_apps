@@ -1,6 +1,6 @@
 Screen {
     layout: grid;
-    grid-size: 1 2;
+    grid-size: 2 2;
     grid-gutter: 2;
     padding: 2 1;
 }
@@ -9,8 +9,10 @@ Label {
     height: 100%;
     content-align: center bottom;
     text-style: bold;
+    column-span: 2;
 }
 Button {
-    width: 60%;
+    width: 100%;
     align: center middle;
+    column-span: 2;
 }
