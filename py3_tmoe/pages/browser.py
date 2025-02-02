@@ -26,7 +26,7 @@ def run() -> None:
             ":violin: Vivaldi 浏览器：一切皆可定制",
             ":leafy_green: Midori 浏览器：基于Gecko的轻量级开源浏览器",
             ":globe_with_meridians: GNOME Web：GNOME自带，又称Epiphany",
-            ":eagle: Falkon：基于QtWebEngine",
+            ":eagle: Falkon：KDE系软件，基于QtWebEngine",
         ],
         dialog_title="君欲何求：选择什么浏览器",
     )
