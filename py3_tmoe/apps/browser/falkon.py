@@ -41,7 +41,7 @@ class Falkon(Browser):
         install_app(self._DISTRO, [self.pkg])
 
         with open(
-            "/usr/local/bin/falkon-no-sandbox", mode="+w", encoding="utf-8"
+            "/usr/local/bin/falkon-no-sandbox", mode="w", encoding="utf-8"
         ) as falkon_no_sandbox:
             falkon_no_sandbox.writelines(
                 [
@@ -67,7 +67,7 @@ class Falkon(Browser):
                     "esac",
                 ]
             )
-        run(["chmod", "+x", "-vf", "/usr/bin/falkon-no-sandbox"])
+        run(["chmod", "+x", "-vf", "/usr/local/bin/falkon-no-sandbox"])
 
         notice = Notice("若不能使用Falkon，请启动falkon-no-sandbox").run()
         assert notice == "ok"
