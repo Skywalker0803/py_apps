@@ -2,12 +2,15 @@
 Falkon Browser
 """
 
+from os import path
+
 from py3_tmoe.apps.browser.common import Browser
 from py3_tmoe.errors.distro_x_only import DistroXOnlyError
-from py3_tmoe.ui.notice import Notice
 from py3_tmoe.utils.app_manage import install_app
-from py3_tmoe.utils.cmd import run
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
+from py3_tmoe.utils.cmd import run
+
+from py3_tmoe.ui.notice import Notice
 
 
 class Falkon(Browser):
@@ -39,34 +42,17 @@ class Falkon(Browser):
     def install(self) -> Browser:
         install_app(self._DISTRO, [self.pkg])
 
+        bin_path = f"{path.dirname(__file__)}/lnk/bin/falkon-no-sandbox"
+
+        # Write falkon no sandbox command
         with open(
             "/usr/local/bin/falkon-no-sandbox", mode="w", encoding="utf-8"
         ) as falkon_no_sandbox:
-            falkon_no_sandbox.writelines(
-                [
-                    "#!/usr/bin/env bash",
-                    "###############",
-                    "if [[ $(command -v falkon) ]]; then",
-                    "   TMOE_BIN='falkon'",
-                    "elif [[ $(command -v falkon-browser) ]]; then",
-                    "   TMOE_BIN='falkon-browser'",
-                    "elif [[ $(command -v org.kde.falkon) ]]; then",
-                    "   TMOE_BIN='org.kde.falkon'",
-                    "fi",
-                    "",
-                    'case "$(id -u)" in',
-                    '0) exec ${TMOE_BIN} --no-sandbox "$@" ;;',
-                    "*)",
-                    '   ${TMOE_BIN} ${ADDITIONAL} "$@"',
-                    '   case "$?" in',
-                    "   0) ;;",
-                    '   *) exec ${TMOE_BIN} --no-sandbox "$@" ;;',
-                    "   esac",
-                    "   ;;",
-                    "esac",
-                ]
-            )
-        run(["chmod", "+x", "-vf", "/usr/local/bin/falkon-no-sandbox"])
+            cmd_bin_content = []
+            with open(bin_path, mode="r", encoding="utf-8") as bin:
+                cmd_bin_content = bin.readlines()
+            falkon_no_sandbox.writelines(cmd_bin_content)
+        run(["chmod", "+rwx", "-vf", "/usr/local/bin/falkon-no-sandbox"])
 
         notice = Notice("若不能使用Falkon，请启动falkon-no-sandbox").run()
         assert notice == "ok"
