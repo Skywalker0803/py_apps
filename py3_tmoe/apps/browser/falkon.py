@@ -42,6 +42,7 @@ class Falkon(Browser):
         install_app(self._DISTRO, [self.pkg])
 
         bin_path = f"{path.dirname(__file__)}/lnk/bin/falkon-no-sandbox"
+        lnk_path = f"{path.dirname(__file__)}/lnk/org.kde.falkon-no-sandbox.desktop"
 
         # Write falkon no sandbox command
         with open(
@@ -50,8 +51,29 @@ class Falkon(Browser):
             cmd_bin_content = []
             with open(bin_path, mode="r", encoding="utf-8") as bin:
                 cmd_bin_content = bin.readlines()
+
             falkon_no_sandbox.writelines(cmd_bin_content)
         run(["chmod", "+rwx", "-vf", "/usr/local/bin/falkon-no-sandbox"])
+
+        # Write falkon no sandbox desktop entry
+        with open(
+            "/usr/share/applications/org.kde.falkon-no-sandbox.desktop",
+            mode="w",
+            encoding="utf-8",
+        ) as entry:
+            entry_content: list[str] = []
+            with open(lnk_path, mode="r", encoding="utf-8") as lnk:
+                entry_content = lnk.readlines()
+
+            entry.writelines(entry_content)
+        run(
+            [
+                "chmod",
+                "+rwx",
+                "-vf",
+                "/usr/share/applications/org.kde.falkon-no-sandbox.desktop",
+            ]
+        )
 
         notice = Notice("若不能使用Falkon，请启动falkon-no-sandbox").run()
         assert notice == "ok"
