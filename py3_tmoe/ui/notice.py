@@ -23,7 +23,7 @@ class Notice(App[str]):
         self.ok = ok
 
     def compose(self) -> ComposeResult:
-        yield Label(":warning: 注意")
+        yield Label(f":warning: 注意：{self.msg}")
         yield Button(self.ok, variant="success", id="ok")
 
     def on_button_pressed(self, event: Button.Pressed):
