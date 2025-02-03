@@ -39,7 +39,10 @@ class VSCode:
 
         download(self.pkg_url, f"/tmp/vscode.{suffix}", overwrite=True)
         run(
-            ["sudo", "apt", "install", f"/tmp/vscode.{suffix}", "-y"],
+            {
+                "debian": ["sudo", "apt", "install", f"/tmp/vscode.{suffix}", "-y"],
+                "redhat": ["sudo", "dnf", "install", f"/tmp/vscode.{suffix}"],
+            }.get(self._DISTRO, ["tar"]),
             "installing vscode pkg in /tmp",
         )
 
