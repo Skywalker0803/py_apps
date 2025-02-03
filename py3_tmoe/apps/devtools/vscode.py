@@ -1,6 +1,8 @@
 """VSCode"""
 
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
+from py3_tmoe.utils.network import download
+from py3_tmoe.utils.cmd import run
 
 
 class VSCode:
@@ -30,6 +32,17 @@ class VSCode:
             + self._ARCH,
             "",
         )
+        suffix: str = {
+            "debian": "deb",
+            "redhat": "rpm",
+        }.get(self._DISTRO, "tar.gz")
+
+        download(self.pkg_url, f"/tmp/vscode.{suffix}", overwrite=True)
+        run(
+            ["sudo", "apt", "install", f"/tmp/vscode.{suffix}", "-y"],
+            "installing vscode pkg in /tmp",
+        )
+
         return self
 
     def install(self):
