@@ -49,8 +49,8 @@ class Falkon(Browser):
             "/usr/local/bin/falkon-no-sandbox", mode="w", encoding="utf-8"
         ) as falkon_no_sandbox:
             cmd_bin_content = []
-            with open(bin_path, mode="r", encoding="utf-8") as bin:
-                cmd_bin_content = bin.readlines()
+            with open(bin_path, mode="r", encoding="utf-8") as bin_file:
+                cmd_bin_content = bin_file.readlines()
 
             falkon_no_sandbox.writelines(cmd_bin_content)
         run(["chmod", "+rwx", "-vf", "/usr/local/bin/falkon-no-sandbox"])
