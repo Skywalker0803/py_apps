@@ -1,8 +1,8 @@
 """VSCode"""
 
-from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
-from py3_tmoe.utils.network import download
 from py3_tmoe.utils.cmd import run
+from py3_tmoe.utils.network import download
+from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
 
 
 class VSCode:
