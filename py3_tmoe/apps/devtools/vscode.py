@@ -3,6 +3,7 @@
 from py3_tmoe.utils.cmd import run
 from py3_tmoe.utils.network import download
 from py3_tmoe.utils.sys import check_architecture, get_distro_short_name
+from py3_tmoe.utils.utils import fix_electron_libxssl
 
 
 class VSCode:
@@ -32,26 +33,28 @@ class VSCode:
             + self._ARCH,
             "",
         )
-        self.suffix: str = {"debian": "deb", "redhat": "rpm"}.get(
-            self._DISTRO, "tar.gz"
-        )
+        suffix: str = {"debian": "deb", "redhat": "rpm"}.get(self._DISTRO, "tar.gz")
 
-        download(self.pkg_url, f"/tmp/vscode.{self.suffix}", overwrite=True)
+        self.pkg_file_path = f"/tmp/vscode.{suffix}"
+
+        download(self.pkg_url, self.pkg_file_path, overwrite=True)
 
         return self
 
     def install(self):
+        fix_electron_libxssl(self._DISTRO)
+        # TODO: FIX VSCode for other distros
+
         run(
             {
-                "debian": [
-                    "sudo",
-                    "apt",
-                    "install",
-                    f"/tmp/vscode.{self.suffix}",
-                    "-y",
-                ],
-                "redhat": ["sudo", "dnf", "install", f"/tmp/vscode.{self.suffix}"],
-            }.get(self._DISTRO, ["tar"]),
+                "debian": ["sudo", "apt", "install", self.pkg_file_path, "-y"],
+                "redhat": ["sudo", "dnf", "install", self.pkg_file_path],
+            }.get(
+                self._DISTRO, ["tar", "-zxvf", self.pkg_file_path, "-C", "/usr/share/"]
+            ),
             "installing vscode pkg in /tmp",
         )
+
+        if self._DISTRO not in ["debian", "redhat"]:
+            run(["rm", "-rvf", "/usr/share/code"])
         return self
