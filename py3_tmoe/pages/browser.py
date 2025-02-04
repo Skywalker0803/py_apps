@@ -17,7 +17,7 @@ from py3_tmoe.ui.selection import Selection as _Selection
 
 def run() -> None:
     """
-    Run browsee selection page
+    Run browser selection page
     """
     selection = _Selection(
         idlist=["firefox", "vivaldi", "midori", "epiphany", "falkon"],
