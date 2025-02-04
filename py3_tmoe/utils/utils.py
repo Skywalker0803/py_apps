@@ -2,9 +2,9 @@
 Other utils in this proj
 """
 
+import subprocess
 from os import path
 from re import sub
-import subprocess
 
 from py3_tmoe.utils.app_manage import install_app
 
