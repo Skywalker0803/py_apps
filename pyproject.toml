@@ -1,7 +1,7 @@
 [tool.poetry]
 # Remove this line if you want to distribute your project as an installable package.
 package-mode = false
-name = "py3_tmoe"
+name = "py_apps"
 version = "0.0.1"
 description = "Trying to revive the famous TMOE Project"
 authors = ["Legolas Wang <legolaswang0803@gmail.com>"]

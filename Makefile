@@ -1,5 +1,5 @@
 SHELL = /bin/bash
-APP_DIR = py3_tmoe
+APP_DIR = py_apps
 
 
 default: install
