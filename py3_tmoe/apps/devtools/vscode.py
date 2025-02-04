@@ -32,21 +32,26 @@ class VSCode:
             + self._ARCH,
             "",
         )
-        suffix: str = {
-            "debian": "deb",
-            "redhat": "rpm",
-        }.get(self._DISTRO, "tar.gz")
-
-        download(self.pkg_url, f"/tmp/vscode.{suffix}", overwrite=True)
-        run(
-            {
-                "debian": ["sudo", "apt", "install", f"/tmp/vscode.{suffix}", "-y"],
-                "redhat": ["sudo", "dnf", "install", f"/tmp/vscode.{suffix}"],
-            }.get(self._DISTRO, ["tar"]),
-            "installing vscode pkg in /tmp",
+        self.suffix: str = {"debian": "deb", "redhat": "rpm"}.get(
+            self._DISTRO, "tar.gz"
         )
+
+        download(self.pkg_url, f"/tmp/vscode.{self.suffix}", overwrite=True)
 
         return self
 
     def install(self):
+        run(
+            {
+                "debian": [
+                    "sudo",
+                    "apt",
+                    "install",
+                    f"/tmp/vscode.{self.suffix}",
+                    "-y",
+                ],
+                "redhat": ["sudo", "dnf", "install", f"/tmp/vscode.{self.suffix}"],
+            }.get(self._DISTRO, ["tar"]),
+            "installing vscode pkg in /tmp",
+        )
         return self
