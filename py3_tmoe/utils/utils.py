@@ -2,6 +2,7 @@
 Other utils in this proj
 """
 
+from os import path
 from re import sub
 import subprocess
 
@@ -34,3 +35,12 @@ def fix_electron_libxssl(distro: str) -> None:
                 == "libnss3.so:"
             ):
                 install_app(distro, ["libnss3"])
+        case "redhat":
+            install_app(distro, ["libXScrnSaver"])
+        case "arch":
+            if not path.exists("/usr/lib/libnss3.so"):
+                install_app(distro, ["nss"])
+        case "suse":
+            install_app(distro, ["mozilla-nss"])
+        case _:
+            install_app(distro, ["nss"])
