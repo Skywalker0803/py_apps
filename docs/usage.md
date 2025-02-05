@@ -1,15 +1,15 @@
 # Usage
 
 
-```sh
+```bash
 $ cd PATH_TO_REPO
-$ source venv/bin/activate
+$ poetry shell
 ```
 
 
 ## View available make commands
 
-```sh
+```bash
 $ make help
 ```
 
@@ -18,30 +18,8 @@ $ make help
 
 Run application.
 
-```sh
+```bash
 $ make run
 ```
 
 See [Development](development.md) for commands around code quality.
-
-
-## Run Python commands
-
-_TODO: Replace with your app directory._
-
-```sh
-$ cd pyproject
-```
-
-_TODO: Add to this section with commands based on specifics of your project._
-
-```sh
-$ python foo.py --bar
-Foo
-bar!
-baz?
-```
-
-```sh
-$ foo/bar.py --help
-```
