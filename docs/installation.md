@@ -7,23 +7,23 @@ _TODO: Remove any unnecessary sections._
 
 _TODO: Update for appropriate minimum Python version and any other OS or project-level packages covered later. Optionally add more links._
 
-- some-os-package
-- [Python](https://www.python.org/) >= 3.6
+- 
+- [Python](https://www.python.org/) >= 3.8
 - some-py-package
 
 _OR use a table_
 
 | Name                                     | Description        |
 |------------------------------------------|--------------------|
-| some-os-package                          | Some description.  |
-| [Python](https://www.python.org/) >= 3.6 | Info about Python. |
+| aa                          | Some description.  |
+| [Python](https://www.python.org/) >= 3.8 | This project is developed under python 3.10 |
 | some-py-package                          | Some description.  |
 
 
 ## Install hooks
 
 ```sh
-$ make hooks
+$ make hooks    # Setup git pre-push hooks
 ```
 
 
@@ -50,7 +50,7 @@ _To be completed by you._
 
 It is usually best-practice in _Python_ projects to install into a sandboxed _virtual environment_, This will be locked to a specific Python version and contain only the _Python_ libraries that you install into it, so that your _Python_ projects do not get affected.
 
-_TODO Update your template to use either `pip` or `poetry` only and removed unnecessary configs._
+I use `poetry` by default, and [`poetry.toml`](/poetry.toml) is configured to open venv under /path/to/project/.venv/ directory
 
 ### Install with Pip
 
