@@ -4,6 +4,6 @@ This project will run checks and build steps on [GitHub Actions](https://github.
 
 See the [workflow](/.github/workflows/main.yml) config file.
 
-See results on the [Actions](https://github.com/MichaelCurrin/py-project-template/actions/) tab.
+See results on the [Actions](https://github.com/Skywalker0803/py_apps/actions/) tab.
 
 _TODO: Make sure Poetry is installed in your CI pipeline if you want to use Poetry._
