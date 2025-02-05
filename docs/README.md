@@ -40,7 +40,21 @@ py_apps/
     │   ├ devtools.py
     │   └ main.py
     ├ ui/
+    │   ├ __init__.py
+    │   ├ dialog.py
+    │   ├ dialog.tcss
+    │   ├ notice.py
+    │   ├ notice.tcss
+    │   ├ selection.py
+    │   └ selection.tcss
     ├ utils/
+    │   ├ __init__.py
+    │   ├ common.py
+    │   ├ app_manage.py
+    │   ├ cmd.py
+    │   ├ network.py
+    │   ├ sys.py
+    │   └ utils.py
     ├ __init__.py
     └ main.py
 ```
