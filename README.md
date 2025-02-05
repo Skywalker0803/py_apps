@@ -3,8 +3,7 @@
 
 <!-- Shields generated with https://michaelcurrin.github.io/badge-generator/ -->
 
-[![Python CI](https://github.com/MichaelCurrin/py-project-template/actions/workflows/main.yml/badge.svg)](https://github.com/MichaelCurrin/py-project-template/actions/workflows/main.yml)
-[![GitHub tag](https://img.shields.io/github/tag/MichaelCurrin/py-project-template?include_prereleases=&sort=semver)](https://github.com/MichaelCurrin/py-project-template/releases/)
+[![Python CI](https://github.com/Skywalker0803/py_apps/actions/workflows/main.yml/badge.svg)](https://github.com/MichaelCurrin/py-project-template/actions/workflows/main.yml)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
 [![Made with Python](https://img.shields.io/badge/Python->=3.6-blue?logo=python&logoColor=white&style=for-the-badge)](https://python.org "Go to Python website")
