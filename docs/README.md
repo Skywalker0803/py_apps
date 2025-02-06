@@ -31,6 +31,7 @@ py_apps/
     │   │   ├ midori.py
     │   │   └ vivaldi.py
     │   └ devtools/
+    │       ├ vscode.py
     │       └ vscode.py
     ├ errors/
     │   ├ __init__.py
