@@ -7,17 +7,13 @@ _TODO: Remove any unnecessary sections._
 
 _TODO: Update for appropriate minimum Python version and any other OS or project-level packages covered later. Optionally add more links._
 
-- 
-- [Python](https://www.python.org/) >= 3.8
-- some-py-package
 
-_OR use a table_
 
 | Name                                     | Description        |
 |------------------------------------------|--------------------|
-| aa                          | Some description.  |
 | [Python](https://www.python.org/) >= 3.8 | This project is developed under python 3.10 |
-| some-py-package                          | Some description.  |
+| `python3-pip`  | Just for ubuntu, for others, search yourself |
+| `poetry` | Yet another pip, also able to manage venvs |
 
 
 ## Install hooks
