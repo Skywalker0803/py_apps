@@ -1,6 +1,6 @@
 <div align="center">
 
-# PY Apps: Make software within reach
+# PY Apps
 
 </div>
 
