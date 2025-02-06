@@ -39,3 +39,7 @@ Export poetry dependencies to requirements.txt
 ```bash
 make exp
 ```
+
+## Code quality
+
+`pylint` score pass 9 & pass `isort` & `black` check
