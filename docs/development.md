@@ -22,7 +22,7 @@ $ make lint
 ## Check types
 
 ```sh
-$ make typecheck
+$ make typecheck    # Or make t
 ```
 
 
@@ -30,4 +30,12 @@ $ make typecheck
 
 ```sh
 $ make test
+```
+
+## Export
+
+Export poetry dependencies to requirements.txt
+
+```bash
+make exp
 ```
