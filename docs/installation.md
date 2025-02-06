@@ -1,8 +1,5 @@
 # Installation
 
-_TODO: Remove any unnecessary sections._
-
-
 ## Project requirements
 
 | Name                                     | Description        |
