@@ -1,5 +1,10 @@
-# Python Project Template documentation
-> Starter template for a Python app - including CI and docs 🐍 🌠
+<div align="center">
+
+# PY Apps: Make software within reach
+
+</div>
+
+> Trying to make useful softwares within reach
 
 <!-- TODO: Replace with your project details. -->
 
