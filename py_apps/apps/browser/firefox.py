@@ -2,7 +2,7 @@
 This module contains an Firefox managing class
 """
 
-from enum import Enum
+from enum import Enum, unique
 from time import sleep
 
 from py_apps.apps.browser.common import Browser
@@ -12,6 +12,7 @@ from py_apps.utils.cmd import check_cmd_exists, run
 from py_apps.utils.sys import get_distro_short_name
 
 
+@unique
 class FirefoxVariants(Enum):
     """
     The variants enum for firefox
@@ -88,9 +89,7 @@ class Firefox(Browser):
                 """Package: *\n
 Pin: release o=LP-PPA-mozillateam,l=Firefox ESR and Thunderbird stable builds
 Pin-Priority: 900
-""".split(
-                    "\n", maxsplit=1
-                )
+""".split("\n", maxsplit=1)
             )
             run(
                 ["chmod", "a+r", "-vf", "/etc/apt/preferences.d/90-mozilla-firefox"],
