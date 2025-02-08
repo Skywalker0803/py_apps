@@ -4,8 +4,9 @@ Neovim config & setup class
 
 from enum import Enum, unique
 
+from py_apps.utils.cmd import run
 from py_apps.utils.sys import check_architecture, get_distro_short_name
-from py_apps.utils.network import get
+from py_apps.utils.network import download, get
 
 
 @unique
@@ -57,4 +58,10 @@ class Neovim:
                 exit("Unknown Variant")
 
     def prepare(self):
+        if self.use_installer:
+            download(self.use_installer, file_path="/tmp/installer.sh", overwrite=True)
+            run(
+                ["sudo", "chmod", "+rx", "/tmp/installer.sh"],
+                "when granting executive permission to installer",
+            )
         return self
