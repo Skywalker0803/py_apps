@@ -36,6 +36,13 @@ class Neovim:
         self.use_sys_pkg: bool = use_sys_pkg_dict.get(
             f"{self._DISTRO}_{self._ARCH}", True
         )
+        self.pkg = "neovim"
+
+        self._var_dict: dict[NvimVariants, str] = {
+            NvimVariants.ASTRO: "https://github.com/AstroNvim/template",
+            NvimVariants.LAZY: "https://github.com/LazyVim/starter",
+            NvimVariants.NVCHAD: "https://github.com/NvChad/starter",
+        }
 
     def prepare(self):
         self.pkg = "neovim"
