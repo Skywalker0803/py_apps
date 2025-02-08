@@ -63,7 +63,7 @@ def download(
     )
 
 
-def get_github_releases(repo: str, version: str = "latest"):
+def get_github_releases(repo: str, version: str = "latest") -> list[str]:
     """
     Get the GitHub releases file url list
 
