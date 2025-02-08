@@ -27,6 +27,14 @@ class VSCode:
             "other_armhf": "https://aka.ms/linux-armhf",
         }
 
+        # Decide which suffix to use based on current distro
+        suffix: str = {
+            "debian": "deb",
+            "redhat": "rpm",
+        }.get(self._DISTRO, "tar.gz")
+
+        self.pkg_file_path = f"/tmp/vscode.{suffix}"
+
     def prepare(self):
         """Prepare for vscode"""
         self.pkg_url = self._pkg_dict.get(
@@ -35,11 +43,6 @@ class VSCode:
             + self._ARCH,
             "",
         )
-
-        # Decide which suffix to use based on current distro
-        suffix: str = {"debian": "deb", "redhat": "rpm"}.get(self._DISTRO, "tar.gz")
-
-        self.pkg_file_path = f"/tmp/vscode.{suffix}"
 
         # Download the pkg
         download(self.pkg_url, self.pkg_file_path, overwrite=True)
