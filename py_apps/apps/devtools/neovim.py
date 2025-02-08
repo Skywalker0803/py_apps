@@ -59,9 +59,8 @@ class Neovim:
 
     def prepare(self):
         if self.use_installer:
-            download(self.use_installer, file_path="/tmp/installer.sh", overwrite=True)
             run(
-                ["sudo", "chmod", "+rx", "/tmp/installer.sh"],
-                "when granting executive permission to installer",
+                ["bash", "-c", self.use_installer],
+                "when executing installer",
             )
         return self
