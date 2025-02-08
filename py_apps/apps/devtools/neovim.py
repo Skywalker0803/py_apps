@@ -2,6 +2,8 @@
 Neovim config & setup class
 """
 
+from sys import exit as sys_exit
+
 from enum import Enum, unique
 
 from py_apps.utils.cmd import run
@@ -51,15 +53,18 @@ class Neovim:
         if self.var_url == "":
             self.use_installer: str = get(
                 {
-                    NvimVariants.LUNAR: "https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.4/neovim-0.9/utils/installer/install.sh",
+                    NvimVariants.LUNAR: "https://raw.githubusercontent.com/LunarVim/LunarVim/"
+                    + "release-1.4/neovim-0.9/utils/installer/install.sh",
                     NvimVariants.SPACE: "https://spacevim.org/cn/install.sh",
                 }.get(self.variant, "")
             ).text
 
             if self.use_installer != "":
-                exit("Unknown Variant")
+                sys_exit("Unknown Variant")
 
     def prepare(self):
+        """Prepare for the installation to go"""
+
         # If pkg is too stale
         if not self.use_sys_pkg:
             pkg_url: str = ""
@@ -71,6 +76,8 @@ class Neovim:
         return self
 
     def install(self):
+        """Install nvim with configs"""
+
         # Run installer
         if self.use_installer:
             run(["bash", "-c", self.use_installer], "when executing installer")
