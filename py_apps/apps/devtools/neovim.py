@@ -5,6 +5,7 @@ Neovim config & setup class
 from enum import Enum, unique
 
 from py_apps.utils.sys import check_architecture, get_distro_short_name
+from py_apps.utils.network import get
 
 
 @unique
@@ -38,12 +39,22 @@ class Neovim:
         )
         self.pkg = "neovim"
 
-        self._var_dict: dict[NvimVariants, str] = {
+        self.var_url: str = {
             NvimVariants.ASTRO: "https://github.com/AstroNvim/template",
             NvimVariants.LAZY: "https://github.com/LazyVim/starter",
             NvimVariants.NVCHAD: "https://github.com/NvChad/starter",
-        }
+        }.get(self.variant, "")
+
+        if self.var_url == "":
+            self.use_installer: str = get(
+                {
+                    NvimVariants.LUNAR: "https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.4/neovim-0.9/utils/installer/install.sh",
+                    NvimVariants.SPACE: "https://spacevim.org/cn/install.sh",
+                }.get(self.variant, "")
+            ).text
+
+            if self.use_installer != "":
+                exit("Unknown Variant")
 
     def prepare(self):
-        self.pkg = "neovim"
         return self
