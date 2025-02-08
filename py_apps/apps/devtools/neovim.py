@@ -3,11 +3,12 @@ Neovim config & setup class
 """
 
 from enum import Enum, unique
+from re import search
 
 
 from py_apps.utils.cmd import run
 from py_apps.utils.sys import check_architecture, get_distro_short_name
-from py_apps.utils.network import get, get_github_releases
+from py_apps.utils.network import download, get, get_github_releases
 
 
 @unique
@@ -61,12 +62,17 @@ class Neovim:
                 exit("Unknown Variant")
 
     def prepare(self):
-        if self.use_installer:
-            run(
-                ["bash", "-c", self.use_installer],
-                "when executing installer",
-            )
-
+        # If pkg is too stale
         if not self.use_sys_pkg:
-            get_github_releases("Skywalker0803/nvim-releases", "v0.11.0")
+            pkg_url: str = ""
+
+            for url in get_github_releases("Skywalker0803/nvim-releases", "v0.11.0"):
+                pkg_url = url if url == f"{self._ARCH}.deb" else ""
+
+            download(pkg_url, file_path="/tmp/neovim.deb", overwrite=True)
         return self
+
+    def install(self):
+        # Run installer
+        if self.use_installer:
+            run(["bash", "-c", self.use_installer], "when executing installer")
