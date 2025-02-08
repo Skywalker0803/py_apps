@@ -28,6 +28,7 @@ class VSCode:
         }
 
     def prepare(self):
+        """Prepare for vscode"""
         self.pkg_url = self._pkg_dict.get(
             (self._DISTRO if self._DISTRO in ["debian", "redhat"] else "other")
             + "_"
@@ -46,6 +47,7 @@ class VSCode:
         return self
 
     def install(self):
+        """Install vscode pkg"""
         fix_electron_libxssl(self._DISTRO)
         # TODO: FIX VSCode for distros other than deb & rhel
 
