@@ -27,4 +27,7 @@ class Notice(App[str]):
         yield Button(self.ok, variant="success", id="ok")
 
     def on_button_pressed(self, event: Button.Pressed):
+        """
+        Textual built-in method to process button clicks
+        """
         self.exit(event.button.id)

@@ -3,8 +3,6 @@ Neovim config & setup class
 """
 
 from enum import Enum, unique
-from re import search
-
 
 from py_apps.utils.cmd import run
 from py_apps.utils.sys import check_architecture, get_distro_short_name
