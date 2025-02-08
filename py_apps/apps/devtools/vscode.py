@@ -14,6 +14,7 @@ class VSCode:
 
     def __init__(self) -> None:
         self.pkg_url: str = ""
+        # Set pkg dict to some Microsoft direct links
         self._pkg_dict: dict[str, str] = {
             "debian_amd64": "https://go.microsoft.com/fwlink/?LinkID=760868",
             "redhat_amd64": "https://go.microsoft.com/fwlink/?LinkID=760867",
@@ -33,18 +34,22 @@ class VSCode:
             + self._ARCH,
             "",
         )
+
+        # Decide which suffix to use based on current distro
         suffix: str = {"debian": "deb", "redhat": "rpm"}.get(self._DISTRO, "tar.gz")
 
         self.pkg_file_path = f"/tmp/vscode.{suffix}"
 
+        # Download the pkg
         download(self.pkg_url, self.pkg_file_path, overwrite=True)
 
         return self
 
     def install(self):
         fix_electron_libxssl(self._DISTRO)
-        # TODO: FIX VSCode for other distros
+        # TODO: FIX VSCode for distros other than deb & rhel
 
+        # Install pkg for deb and rhel
         run(
             {
                 "debian": ["sudo", "apt", "install", self.pkg_file_path, "-y"],
@@ -57,4 +62,5 @@ class VSCode:
 
         if self._DISTRO not in ["debian", "redhat"]:
             run(["rm", "-rvf", "/usr/share/code"])
+
         return self

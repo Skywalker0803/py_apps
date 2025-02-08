@@ -6,7 +6,7 @@ from enum import Enum, unique
 
 from py_apps.utils.cmd import run
 from py_apps.utils.sys import check_architecture, get_distro_short_name
-from py_apps.utils.network import download, get
+from py_apps.utils.network import get
 
 
 @unique
