@@ -7,7 +7,7 @@ from subprocess import CalledProcessError
 from subprocess import run as process_run
 
 
-def run(cmd_args: list[str], msg: str = ""):
+def run(cmd_args: list[str], msg: str = "", **kwargs):
     """
     The function which runs the command with error processing abilities
 
@@ -16,13 +16,15 @@ def run(cmd_args: list[str], msg: str = ""):
         str msg: the message printed when an error occurred, usually started with a "when"
     """
     try:
-        process_run(args=cmd_args, check=True)
+        return process_run(args=cmd_args, check=True, **kwargs)
     except CalledProcessError as err:
         print(
             "\033[91m\033[1m[Error]",
             "An error occurred!" if msg == "" else f"An error occurred {msg}",
         )
         print(f"\033[31mError message\033[0m\n\t{str(err)}")
+
+        return 1
 
 
 def check_cmd_exists(cmd: str) -> bool:

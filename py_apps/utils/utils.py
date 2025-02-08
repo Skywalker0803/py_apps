@@ -2,7 +2,7 @@
 Other utils in this proj
 """
 
-import subprocess
+from subprocess import check_output
 from os import path
 from re import sub
 
@@ -28,12 +28,7 @@ def fix_electron_libxssl(distro: str) -> None:
     """Fix electron libxssl problem"""
     match distro:
         case "debian":
-            if (
-                not subprocess.run(
-                    ["whereis", "libnss3.so"], stdout=subprocess.PIPE
-                ).stdout.decode("utf-8")
-                == "libnss3.so:"
-            ):
+            if not check_output(["whereis", "libnss3.so"]) == "libnss3.so:":
                 install_app(distro, ["libnss3"])
         case "redhat":
             install_app(distro, ["libXScrnSaver"])
