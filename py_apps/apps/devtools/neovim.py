@@ -74,7 +74,6 @@ class Neovim:
         if not self.use_sys_pkg:
             pkg_url: str = ""
 
-            print(get_github_releases("Skywalker0803/nvim-releases"))
             for url in get_github_releases("Skywalker0803/nvim-releases"):
                 pkg_url = url if search(f".{self._ARCH}.deb", url) else ""
 

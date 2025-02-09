@@ -2,7 +2,7 @@
 This module contains download functions for this proj
 """
 
-from json import dump, dumps, loads
+from json import loads
 from sys import exit as sys_exit
 
 from requests import get as req_get
@@ -77,7 +77,8 @@ def get_github_releases(repo: str, version: str = "latest") -> list[str]:
         ).text
     )
 
-    print(dumps(json_content))
+    # Debug msg:
+    # print(dumps(json_content))
 
     assets: list[str] = []
 
