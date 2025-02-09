@@ -2,9 +2,9 @@
 Other utils in this proj
 """
 
-from subprocess import check_output
 from os import path
 from re import sub
+from subprocess import check_output
 
 from py_apps.utils.app_manage import install_app
 

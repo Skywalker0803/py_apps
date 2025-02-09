@@ -2,16 +2,15 @@
 Neovim config & setup class
 """
 
+from enum import Enum, unique
 from os import getenv
 from re import search
 from sys import exit as sys_exit
 
-from enum import Enum, unique
-
-from py_apps.utils.cmd import run
-from py_apps.utils.sys import check_architecture, get_distro_short_name
-from py_apps.utils.network import download, get, get_github_releases
 from py_apps.utils.app_manage import install_app
+from py_apps.utils.cmd import run
+from py_apps.utils.network import download, get, get_github_releases
+from py_apps.utils.sys import check_architecture, get_distro_short_name
 
 
 @unique
