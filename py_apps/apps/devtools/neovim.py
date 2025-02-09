@@ -2,6 +2,7 @@
 Neovim config & setup class
 """
 
+from os import getenv
 from re import search
 from sys import exit as sys_exit
 
@@ -97,4 +98,4 @@ class Neovim:
             run(["bash", "-c", self.use_installer], "when executing installer")
 
         elif self.var_url != "":
-            run(["git", "clone", self.var_url, "~/.config/nvim"])
+            run(["git", "clone", self.var_url, f"{getenv('HOME')}/.config/nvim"])
