@@ -9,6 +9,7 @@ from enum import Enum, unique
 from py_apps.utils.cmd import run
 from py_apps.utils.sys import check_architecture, get_distro_short_name
 from py_apps.utils.network import download, get, get_github_releases
+from py_apps.utils.app_manage import install_app
 
 
 @unique
@@ -78,6 +79,18 @@ class Neovim:
     def install(self):
         """Install nvim with configs"""
 
+        if self.use_sys_pkg:
+            install_app(self._DISTRO, [self.pkg])
+
+        else:
+            run(
+                ["sudo", "apt", "install", "/tmp/neovim.deb", "-y"],
+                msg="when installing neovim pkg",
+            )
+
         # Run installer
         if self.use_installer:
             run(["bash", "-c", self.use_installer], "when executing installer")
+
+        elif self.var_url != "":
+            run([])
