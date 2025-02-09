@@ -1,9 +1,13 @@
+"""PY Apps front page"""
+
 from py_apps.pages.browser import run as browser
 from py_apps.pages.devtools import run as devtools
 from py_apps.ui.selection import Selection
 
 
 def run():
+    """Main function"""
+
     selection = Selection(
         idlist=["browser", "devtools"],
         itemlist=[
