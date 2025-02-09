@@ -1,3 +1,7 @@
+"""Run DevTools selection page"""
+
+from sys import exit as sys_exit
+
 from py_apps.apps.devtools.neovim import Neovim, NvimVariants
 from py_apps.apps.devtools.vscode import VSCode as _VSCode
 from py_apps.ui.selection import Selection as _Selection
@@ -33,4 +37,4 @@ def run() -> None:
             ).run()
             Neovim(NvimVariants(variant)).prepare().install()
         case _:
-            exit("TODO")
+            sys_exit("TODO")
