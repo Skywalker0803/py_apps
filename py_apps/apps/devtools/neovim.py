@@ -2,6 +2,7 @@
 Neovim config & setup class
 """
 
+from re import search
 from sys import exit as sys_exit
 
 from enum import Enum, unique
@@ -50,8 +51,10 @@ class Neovim:
             NvimVariants.NVCHAD: "https://github.com/NvChad/starter",
         }.get(self.variant, "")
 
+        self.use_installer: str = ""
+
         # Setup nvim configs using installer scripts
-        if self.var_url == "":
+        if self.var_url == "" and variant != NvimVariants.DEFAULT:
             self.use_installer: str = get(
                 {
                     NvimVariants.LUNAR: "https://raw.githubusercontent.com/LunarVim/LunarVim/"
@@ -60,7 +63,7 @@ class Neovim:
                 }.get(self.variant, "")
             ).text
 
-            if self.use_installer != "":
+            if self.use_installer == "":
                 sys_exit("Unknown Variant")
 
     def prepare(self):
@@ -70,8 +73,9 @@ class Neovim:
         if not self.use_sys_pkg:
             pkg_url: str = ""
 
-            for url in get_github_releases("Skywalker0803/nvim-releases", "v0.11.0"):
-                pkg_url = url if url == f"{self._ARCH}.deb" else ""
+            print(get_github_releases("Skywalker0803/nvim-releases"))
+            for url in get_github_releases("Skywalker0803/nvim-releases"):
+                pkg_url = url if search(f".{self._ARCH}.deb", url) else ""
 
             download(pkg_url, file_path="/tmp/neovim.deb", overwrite=True)
         return self
@@ -93,4 +97,4 @@ class Neovim:
             run(["bash", "-c", self.use_installer], "when executing installer")
 
         elif self.var_url != "":
-            run([])
+            run(["git", "clone", self.var_url, "~/.config/nvim"])
