@@ -80,7 +80,7 @@ clean:
 	rm -rfv build/ dist/
 
 pack:
-	mkdir output && tar -czvf output/${APP_DIR}.tar.gz dist/${APP_DIR}
+	tar -czvf dist/${APP_DIR}.tar.gz dist/${APP_DIR}
 
 build: clean
 	pyinstaller py_apps/main.py --add-data "py_apps/ui/*.tcss:py_apps/ui"

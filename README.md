@@ -30,6 +30,8 @@ DO NOT USE default code formatting feature of your IDE, make sure to run `make f
 - `make fix`: run both `make fmt` & `make lint` together
 - `make test`: start the tests with `pytest`
 - `make run`: run the main project in `src/` as a module
+- `make build`: build the project as dir in ./dist/py_apps/
+- `make pack`: pack the built products into ./dist/py_apps.tar.gz
 
 For other usages, please check in the project's [Makefile](/Makefile) for more information
 
