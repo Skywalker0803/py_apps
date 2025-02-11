@@ -95,5 +95,6 @@ class Neovim:
         if self.use_installer:
             run(["bash", "-c", self.use_installer], "when executing installer")
 
+        # Clone the config repo
         elif self.var_url != "":
             run(["git", "clone", self.var_url, f"{getenv('HOME')}/.config/nvim"])
