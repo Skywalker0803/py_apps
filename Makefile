@@ -75,11 +75,14 @@ exp:
 	# Export dev dependencies for pip
 	poetry export -f requirements.txt --only dev --output requirements-dev.txt --without-hashes
 
-build-dir:
+clean:
+	@# Remove old built files
 	rm -rfv build/ dist/
+
+pack:
+	mkdir output && tar -czvf output/${APP_DIR}.tar.gz dist/${APP_DIR}
+
+build: clean
 	pyinstaller py_apps/main.py --add-data "py_apps/ui/*.tcss:py_apps/ui"
 	mv dist/main dist/${APP_DIR}
 	mv dist/${APP_DIR}/main dist/${APP_DIR}/py-apps
-
-pack:
-	tar -xvf
