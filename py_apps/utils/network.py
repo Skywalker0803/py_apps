@@ -109,6 +109,7 @@ def get(url: str, headers: dict | None = None):
         headers = {}
     try:
         res = req_get(url=url, headers=headers, timeout=10)
+        res.raise_for_status()
     except RequestException as err:
         print(str(err))
         sys_exit("request_error")
