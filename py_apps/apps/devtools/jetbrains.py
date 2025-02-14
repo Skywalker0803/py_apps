@@ -6,6 +6,7 @@ from enum import Enum, unique
 from bs4 import BeautifulSoup
 
 from py_apps.utils.network import get
+from py_apps.utils.utils import fetch_webpage_content
 
 
 @unique
@@ -39,7 +40,11 @@ class Jetbrains:
         self.link = ""
 
     def prepare(self):
-        soup: BeautifulSoup = BeautifulSoup(get(self.page).text, "html.parser")
+        # soup: BeautifulSoup = BeautifulSoup(get(self.page).text, "html.parser")
+        soup = fetch_webpage_content(self.page)
+
+        if soup is None:
+            raise Exception("")
         links = soup.find_all(
             "a",
             {
