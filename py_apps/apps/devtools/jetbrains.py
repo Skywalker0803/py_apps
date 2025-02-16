@@ -3,10 +3,7 @@
 from enum import Enum, unique
 
 
-from bs4 import BeautifulSoup
-
-from py_apps.utils.network import get
-from py_apps.utils.utils import fetch_webpage_content
+from py_apps.utils.sys import check_architecture
 
 
 jetbrains_ver: dict[str, str] = {
@@ -31,6 +28,8 @@ class JetbrainsVariants(Enum):
 class Jetbrains:
     """Jetbrains IDE Family Classes"""
 
+    _ARCH = check_architecture()
+
     def __init__(self, variant: JetbrainsVariants) -> None:
         self.variant = variant
         self.product: str = variant.value.split("_")[0]
@@ -45,11 +44,12 @@ class Jetbrains:
         self.link = ""
 
     def prepare(self):
-        file_name = {"idea_community": "ideaIC", "idea_professional": "ideaU"}[
-            self.variant.value
-        ]
+        file_name = {
+            "idea_community": "ideaIC",
+            "idea_professional": "ideaU",
+        }[self.variant.value]
 
-        self.link = f"https://download.jetbrains.com/{self.product}/{file_name}-{jetbrains_ver[self.product]}{''}.tar.gz"
+        self.link = f"https://download.jetbrains.com/{self.product}/{file_name}-{jetbrains_ver[self.product]}{'-aarch64' if self._ARCH=='arm64' else ''}.tar.gz"
 
         if self.link is None:
             raise Exception("Bug in Jetbrains get download link")
