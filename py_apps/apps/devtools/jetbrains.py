@@ -6,19 +6,6 @@ from enum import Enum, unique
 from py_apps.utils.sys import check_architecture
 
 
-jetbrains_ver: dict[str, str] = {
-    "idea": "2024.3.2.1",
-    "python": "2024.3.3",
-    "go": "2024.3.3",
-    "webide": "2024.3.3",
-    "webstorm": "2024.3.2.1",
-    "cpp": "2024.3.3",
-    "rider": "2024.3.5",
-    "rustrover": "2024.3.4",
-    "ruby": "2024.3.2.1",
-}
-
-
 @unique
 class JetbrainsVariants(Enum):
     IDEA_COMMUNITY = "idea_community"
@@ -53,7 +40,7 @@ class Jetbrains:
         self.link = ""
 
     def prepare(self):
-        file_name = {
+        file_name: str = {
             "idea_community": "ideaIC",
             "idea_professional": "ideaU",
             "python_community": "pycharm-community",
@@ -67,9 +54,21 @@ class Jetbrains:
             "ruby": "RubyMine",
         }[self.variant.value]
 
+        version: str = {
+            "idea": "2024.3.2.1",
+            "python": "2024.3.3",
+            "go": "2024.3.3",
+            "webide": "2024.3.3",
+            "webstorm": "2024.3.2.1",
+            "cpp": "2024.3.3",
+            "rider": "2024.3.5",
+            "rustrover": "2024.3.4",
+            "ruby": "2024.3.2.1",
+        }[self.product]
+
         self.link = (
             f"https://download.jetbrains.com/{self.product}/"
-            + f"{file_name}-{jetbrains_ver[self.product]}"
+            + f"{file_name}-{version}"
             + ("-aarch64" if self._ARCH == "arm64" else "")
             + ".tar.gz"
         )
@@ -77,6 +76,6 @@ class Jetbrains:
         if self.link is None:
             raise Exception("Bug in Jetbrains get download link")
 
-        print(self.link)
+        # print(self.link)
 
         return self
