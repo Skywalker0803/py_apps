@@ -14,6 +14,8 @@ jetbrains_ver: dict[str, str] = {
     "webstorm": "2024.3.2.1",
     "cpp": "2024.3.3",
     "rider": "2024.3.5",
+    "rustrover": "2024.3.4",
+    "ruby": "2024.3.2.1",
 }
 
 
@@ -28,7 +30,7 @@ class JetbrainsVariants(Enum):
     CLION = "cpp"
     RIDER = "rider"
     RUSTROVER = "rustrover"
-    RUBYMINE = "rubymine"
+    RUBYMINE = "ruby"
 
 
 class Jetbrains:
@@ -61,6 +63,8 @@ class Jetbrains:
             "webstorm": "WebStorm",
             "cpp": "CLion",
             "rider": "JetBrains.Rider",
+            "rustrover": "RustRover",
+            "ruby": "RubyMine",
         }[self.variant.value]
 
         self.link = (
