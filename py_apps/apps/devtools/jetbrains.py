@@ -2,7 +2,6 @@
 
 from enum import Enum, unique
 
-
 from py_apps.utils.sys import check_architecture
 
 
