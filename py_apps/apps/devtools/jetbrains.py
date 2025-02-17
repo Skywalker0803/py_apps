@@ -8,6 +8,8 @@ from py_apps.utils.sys import check_architecture
 
 @unique
 class JetbrainsVariants(Enum):
+    """JetbrainsVariants enum list"""
+
     IDEA_COMMUNITY = "idea_community"
     IDEA_PRO = "idea_professional"
     PYCHARM_COMMUNITY = "python_community"
@@ -40,6 +42,8 @@ class Jetbrains:
         self.link = ""
 
     def prepare(self):
+        """Prepare download links"""
+
         file_name: str = {
             "idea_community": "ideaIC",
             "idea_professional": "ideaU",
@@ -72,9 +76,6 @@ class Jetbrains:
             + ("-aarch64" if self._ARCH == "arm64" else "")
             + ".tar.gz"
         )
-
-        if self.link is None:
-            raise Exception("Bug in Jetbrains get download link")
 
         # print(self.link)
 
