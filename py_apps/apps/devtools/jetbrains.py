@@ -2,6 +2,7 @@
 
 from enum import Enum, unique
 
+from py_apps.utils.network import download
 from py_apps.utils.sys import check_architecture
 
 
@@ -81,4 +82,5 @@ class Jetbrains:
         return self
 
     def install(self):
+        download(self.link, f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz")
         return self
