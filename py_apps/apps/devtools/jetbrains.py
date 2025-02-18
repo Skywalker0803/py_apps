@@ -79,3 +79,6 @@ class Jetbrains:
         # print(self.link)
 
         return self
+
+    def install(self):
+        return self
