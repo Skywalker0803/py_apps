@@ -83,4 +83,5 @@ class Jetbrains:
 
     def install(self):
         download(self.link, f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz")
+        # TODO: unpack
         return self
