@@ -4,6 +4,7 @@ from enum import Enum, unique
 
 from py_apps.utils.network import download
 from py_apps.utils.sys import check_architecture
+from py_apps.utils.cmd import run
 
 
 @unique
@@ -82,6 +83,10 @@ class Jetbrains:
         return self
 
     def install(self):
-        download(self.link, f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz")
+        file_name: str = f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz"
+        download(self.link, file_name)
         # TODO: unpack
+
+        run(["tar", "-zxvf", file_name], msg="Unpacking IDE package")
+        run([""])
         return self
