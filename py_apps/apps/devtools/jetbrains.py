@@ -78,7 +78,7 @@ class Jetbrains:
             + ".tar.gz"
         )
 
-        # print(self.link)
+        print(self.link)
 
         return self
 
@@ -88,5 +88,6 @@ class Jetbrains:
         # TODO: unpack
 
         run(["tar", "-zxvf", file_name], msg="Unpacking IDE package")
-        run([""])
+
+        run(["mv", file_name])
         return self
