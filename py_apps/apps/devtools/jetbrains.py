@@ -5,6 +5,7 @@ from enum import Enum, unique
 from py_apps.utils.network import download
 from py_apps.utils.sys import check_architecture
 from py_apps.utils.cmd import run
+from py_apps.utils.utils import extract_tgz_file
 
 
 @unique
@@ -85,9 +86,7 @@ class Jetbrains:
     def install(self):
         file_name: str = f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz"
         download(self.link, file_name)
-        # TODO: unpack
 
-        run(["tar", "-zxvf", file_name], msg="Unpacking IDE package")
+        extract_tgz_file(file_name, "/opt/idea")
 
-        run(["mv", file_name])
         return self

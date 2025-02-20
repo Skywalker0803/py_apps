@@ -51,7 +51,7 @@ def extract_tgz_file(tgz_file: str, target_path: str):
         str target_path
     """
 
-    path: str = "/".join(target_path.split("/").pop())
+    path: str = target_path.split("/").pop()
     # dirname:str = target_path.split("/")[-1]
 
     try:
