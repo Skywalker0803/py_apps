@@ -7,6 +7,9 @@ from re import sub
 from subprocess import check_output
 
 from py_apps.utils.app_manage import install_app
+from py_apps.utils.cmd import run
+
+from tarfile import open as open_tarfile
 
 
 def to_snakecase(string: str):
@@ -37,3 +40,30 @@ def fix_electron_libxssl(distro: str) -> None:
             install_app(distro, ["mozilla-nss"])
         case _:
             install_app(distro, ["nss"])
+
+
+def extract_tgz_file(tgz_file: str, target_path: str):
+    """
+    Extract the .tar.gz file to the targeted path
+
+    Params:
+        str tgz_file
+        str target_path
+    """
+
+    path: str = "/".join(target_path.split("/").pop())
+    # dirname:str = target_path.split("/")[-1]
+
+    try:
+        with open_tarfile(tgz_file, "r:gz") as tar:
+            members = tar.getmembers()
+
+            dir_name: str = next(member.name for member in members if member.isdir())
+
+            tar.extractall(path)
+
+            run(["mv", f"{path}/{dir_name}", target_path])
+
+    except FileNotFoundError as err:
+        print(err)
+        print(f"File not found: {tgz_file}")
