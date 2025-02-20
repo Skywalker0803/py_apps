@@ -55,7 +55,7 @@ def extract_tgz_file(tgz_file: str, target_path: str):
     path.pop()
     path = "/".join(path)
     dirname: str = target_path.split("/")[-1]
-    print(path)
+    # print(path)
 
     try:
         with open_tarfile(tgz_file, "r:gz") as tar:
@@ -63,7 +63,6 @@ def extract_tgz_file(tgz_file: str, target_path: str):
 
             dir_name: str = next(member.name for member in members if member.isdir())
 
-            print(path)
             tar.extractall(dirname)
 
             run(["mv", f"{path}/{dir_name}", target_path])
