@@ -85,7 +85,7 @@ class Jetbrains:
 
     def install(self):
         file_name: str = f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz"
-        download(self.link, file_name)
+        # download(self.link, file_name)
 
         extract_tgz_file(file_name, "/opt/idea")
 
