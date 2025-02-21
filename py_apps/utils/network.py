@@ -44,7 +44,7 @@ def download(
             # Ignore global config file
             "--no-conf" if no_conf else "",
             # Set chunk size to 10 MiB
-            *"-k 10M".split(" "),
+            *"-k 30M".split(" "),
             # Set process number to 5
             # an average between anti-scrap policy and download speed
             *"-s 5 -x 5".split(" "),

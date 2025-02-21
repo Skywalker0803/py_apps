@@ -88,14 +88,16 @@ class Jetbrains:
         file_name: str = f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz"
         download(self.link, file_name)
 
-        extract_tgz_file(file_name, f"/opt/{self.product}")
+        product_dirname = self.variant.name.lower().split("_")[0]
+
+        extract_tgz_file(file_name, f"/opt/{product_dirname}")
 
         run(
             [
                 "ln",
                 "-vf",
-                f"/opt/{self.product}/bin/{self.product}.sh",
-                f"/usr/bin/{self.product}",
+                f"/opt/{product_dirname}/bin/{product_dirname}.sh",
+                f"/usr/bin/{product_dirname}",
             ]
         )
 

@@ -6,6 +6,6 @@ from py_apps.apps.devtools.jetbrains import Jetbrains, JetbrainsVariants
 from py_apps.pages.main import run
 
 
-Jetbrains(JetbrainsVariants.IDEA_COMMUNITY).prepare().install()
+Jetbrains(JetbrainsVariants.PHPSTORM).prepare().install()
 
 run()
