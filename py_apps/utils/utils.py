@@ -41,18 +41,18 @@ def fix_electron_libxssl(distro: str) -> None:
             install_app(distro, ["nss"])
 
 
-def extract_tgz_file(tgz_file: str, target_path: str):
+def extract_tgz_file(tgz_file: str, target_pathname: str):
     """
-    Extract the .tar.gz file to the targeted path
+    Extract the .tar.gz file to the targeted pathname
 
     Params:
         str tgz_file
-        str target_path
+        str target_pathname
     """
 
-    path = target_path.split("/")
-    path.pop()
-    path = "/".join(path)
+    pathname = target_pathname.split("/")
+    pathname.pop()
+    pathname = "/".join(pathname)
 
     try:
         with open_tarfile(tgz_file, "r:gz") as tar:
@@ -60,9 +60,9 @@ def extract_tgz_file(tgz_file: str, target_path: str):
 
             dir_name: str = next(member.name for member in members if member.isdir())
 
-            tar.extractall(path)
+            tar.extractall(pathname)
 
-            run(["mv", f"{path}/{dir_name}", target_path])
+            run(["mv", f"{pathname}/{dir_name}", target_pathname])
 
     except FileNotFoundError as err:
         print(err)

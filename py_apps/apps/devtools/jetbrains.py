@@ -83,6 +83,7 @@ class Jetbrains:
         return self
 
     def install(self):
+        """Extract and install"""
         file_name: str = f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz"
         download(self.link, file_name)
 
