@@ -4,7 +4,6 @@ from enum import Enum, unique
 
 from py_apps.utils.network import download
 from py_apps.utils.sys import check_architecture
-
 from py_apps.utils.utils import extract_tgz_file
 
 

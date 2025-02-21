@@ -5,11 +5,10 @@ Other utils in this proj
 from os import path
 from re import sub
 from subprocess import check_output
+from tarfile import open as open_tarfile
 
 from py_apps.utils.app_manage import install_app
 from py_apps.utils.cmd import run
-
-from tarfile import open as open_tarfile
 
 
 def to_snakecase(string: str):
