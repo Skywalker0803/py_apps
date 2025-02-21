@@ -97,7 +97,7 @@ class Jetbrains:
                 "ln",
                 "-vf",
                 f"/opt/{product_dirname}/bin/{product_dirname}.sh",
-                f"/usr/bin/{product_dirname}",
+                f"/usr/bin/{product_dirname}{'_'+self.edition if self.edition is not None else ''}",
             ]
         )
 
