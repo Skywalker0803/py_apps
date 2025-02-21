@@ -2,6 +2,7 @@
 
 from enum import Enum, unique
 
+from py_apps.utils.cmd import run
 from py_apps.utils.network import download
 from py_apps.utils.sys import check_architecture
 from py_apps.utils.utils import extract_tgz_file
@@ -87,6 +88,15 @@ class Jetbrains:
         file_name: str = f"/tmp/{self.variant.name.lower()}-{self._ARCH}.tar.gz"
         download(self.link, file_name)
 
-        extract_tgz_file(file_name, "/opt/idea")
+        extract_tgz_file(file_name, f"/opt/{self.product}")
+
+        run(
+            [
+                "ln",
+                "-vf",
+                f"/opt/{self.product}/bin/{self.product}.sh",
+                f"/usr/bin/{self.product}",
+            ]
+        )
 
         return self
