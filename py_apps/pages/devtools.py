@@ -2,6 +2,7 @@
 
 from sys import exit as sys_exit
 
+from py_apps.apps.devtools.jetbrains import JetbrainsVariants
 from py_apps.apps.devtools.neovim import Neovim, NvimVariants
 from py_apps.apps.devtools.vscode import VSCode as _VSCode
 from py_apps.ui.selection import Selection as _Selection
@@ -10,10 +11,26 @@ from py_apps.ui.selection import Selection as _Selection
 def run() -> None:
     """Run DevTools selection page"""
     selection = _Selection(
-        idlist=["vscode", "nvim"],
+        idlist=["vscode", "nvim", *[e.value for e in JetbrainsVariants]],
         itemlist=[
             "Visual Studio Code：微软出品，宇宙第一编辑器",
             "Neovim 加配置：极致的效率，极客们的最爱",
+            *[
+                {
+                    "idea_professional": "IntelliJ IDEA Ultimate Edition：适用于 Java Web 开发",
+                    "idea_community": "IntelliJ IDEA Community Edition：功能阉割版，适用于 Java & Kotlin 开发（免费）",
+                    "python_professional": "PyCharm Professional Edition：极其强大的 Python IDE，适用于数据科学和 Web 开发",
+                    "python_community": "PyCharm Community Edition：纯 Python 开发必备（免费）",
+                    "go": "GoLand：为 Gophers 打造的完美 IDE",
+                    "webide": "PhpStorm：为 PHP 开发人员赋能",
+                    "webstorm": "WebStorm：JavaScript & TypeScript 的 IDE（非商业使用免费）",
+                    "cpp": "CLion：开发 C / C++ ，化繁为简，驾驭力量",
+                    "rider": "Rider：全世界最受欢迎的 .NET & C# 游戏开发 IDE（非商业使用免费）",
+                    "ruby": "RubyMine：Ruby on Rails 的 all-in-one 解决方案",
+                    "rustrover": "RustRover：智能 Rust IDE（非商业使用免费）",
+                }[e.value]
+                for e in JetbrainsVariants
+            ],
         ],
         dialog_title="工欲善其事，必先利其器：请选择称手的开发工具",
     ).run()

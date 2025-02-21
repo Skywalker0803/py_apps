@@ -22,6 +22,7 @@ class JetbrainsVariants(Enum):
     RIDER = "rider"
     RUSTROVER = "rustrover"
     RUBYMINE = "ruby"
+    WEBSTORM = "webstorm"
 
 
 class Jetbrains:
