@@ -31,6 +31,8 @@ class Jetbrains:
 
     def __init__(self, variant: JetbrainsVariants) -> None:
         self.variant = variant
+
+        # Get product name by enum value
         self.product: str = variant.value.split("_")[0]
 
         self.edition: str | None = (
@@ -39,7 +41,7 @@ class Jetbrains:
             else None
         )
 
-        # self.page: str = f"https://www.jetbrains.com/{self.product}/download"
+        # Download page: f"https://www.jetbrains.com/{self.product}/download"
 
         self.link = ""
 
@@ -79,7 +81,8 @@ class Jetbrains:
             + ".tar.gz"
         )
 
-        print(self.link)
+        # Debug msg
+        # print(self.link)
 
         return self
 
@@ -90,8 +93,10 @@ class Jetbrains:
 
         product_dirname = self.variant.name.lower().split("_")[0]
 
+        # Extract the downloaded .tar.gz file to /opt
         extract_tgz_file(file_name, f"/opt/{product_dirname}")
 
+        # Link the executable to /usr/bin
         run(
             [
                 "ln",
