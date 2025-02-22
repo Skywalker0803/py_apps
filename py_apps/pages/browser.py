@@ -15,18 +15,19 @@ from py_apps.ui.dialog import Dialog
 from py_apps.ui.selection import Selection
 
 
-def run() -> None:
+def run() -> bool:
     """
     Run browser selection page
     """
     selection = Selection(
-        idlist=["firefox", "vivaldi", "midori", "epiphany", "falkon"],
+        idlist=["firefox", "vivaldi", "midori", "epiphany", "falkon", "back"],
         itemlist=[
             ":fox_face: Firefox 浏览器：为自由而生",
             ":violin: Vivaldi 浏览器：一切皆可定制",
             ":leafy_green: Midori 浏览器：基于Gecko的轻量级开源浏览器",
             ":globe_with_meridians: GNOME Web：GNOME自带，又称Epiphany",
             ":eagle: Falkon：KDE系软件，基于QtWebEngine",
+            "返回上级菜单",
         ],
         dialog_title="君欲何求：选择什么浏览器",
     )
@@ -67,5 +68,12 @@ def run() -> None:
         case "falkon":
             Falkon().prepare().install()
         case _:
-            print("TODO")
-            sys_exit("todo")
+            return True
+
+    return False
+
+
+def browser():
+    while True:
+        if run():
+            return

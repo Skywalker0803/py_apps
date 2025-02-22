@@ -1,13 +1,13 @@
 """PY Apps front page"""
 
 import sys
-from py_apps.pages.browser import run as browser
+from py_apps.pages.browser import browser
 from py_apps.pages.devtools import devtools
 from py_apps.ui.selection import Selection
 
 
 def run() -> bool:
-    """Main function"""
+    """Main page function"""
 
     selection = Selection(
         idlist=["browser", "devtools", "quit"],
@@ -26,13 +26,16 @@ def run() -> bool:
             devtools()
 
         case _:
-            return False
+            return True
 
-    return True
+    return False
 
 
 def main():
+    """Main loop for the app"""
+
     while True:
         if run():
             print("exit")
-            sys.exit()
+            break
+    sys.exit()
