@@ -18,8 +18,8 @@ def run() -> None:
             *[
                 {
                     "idea_professional": "IntelliJ IDEA Ultimate Edition：适用于 Java Web 开发",
-                    "idea_community": "IntelliJ IDEA Community Edition：功能阉割版，适用于 Java & Kotlin 开发（免费）",
-                    "python_professional": "PyCharm Professional Edition：极其强大的 Python IDE，适用于数据科学和 Web 开发",
+                    "idea_community": "IntelliJ IDEA Community Edition：阉割版 Java & Kotlin IDE（免费）",
+                    "python_professional": "PyCharm Professional Edition：极其强大的数据科学和 Web 开发用 IDE",
                     "python_community": "PyCharm Community Edition：纯 Python 开发必备（免费）",
                     "go": "GoLand：为 Gophers 打造的完美 IDE",
                     "webide": "PhpStorm：为 PHP 开发人员赋能",
