@@ -41,7 +41,7 @@ class Falkon(Browser):
     def install(self) -> Browser:
         install_app(self._DISTRO, [self.pkg])
 
-        bin_path = f"{path.dirname(__file__)}/lnk/bin/falkon-no-sandbox"
+        bin_path = f"{path.dirname(__file__)}/lnk/falkon-no-sandbox"
         lnk_path = f"{path.dirname(__file__)}/lnk/org.kde.falkon-no-sandbox.desktop"
 
         # Write falkon no sandbox command

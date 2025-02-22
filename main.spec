@@ -1,11 +1,15 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+data_files = [
+    ('py_apps/ui/*.tcss', 'py_apps/ui'),
+    ('py_apps/apps/browser/lnk/*', 'py_apps/apps/browser/lnk'),
+]
 
 a = Analysis(
     ['py_apps/main.py'],
     pathex=[],
     binaries=[],
-    datas=[('py_apps/ui/*.tcss', 'py_apps/ui')],
+    datas=data_files,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

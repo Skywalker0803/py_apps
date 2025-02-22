@@ -83,6 +83,6 @@ pack:
 	tar -czvf dist/${APP_DIR}.tar.gz dist/${APP_DIR}
 
 build: clean
-	pyinstaller py_apps/main.py --add-data "py_apps/ui/*.tcss:py_apps/ui"
+	pyinstaller main.spec
 	mv dist/main dist/${APP_DIR}
 	mv dist/${APP_DIR}/main dist/${APP_DIR}/py-apps
