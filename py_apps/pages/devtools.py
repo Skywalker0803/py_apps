@@ -1,17 +1,16 @@
 """Run DevTools selection page"""
 
-from sys import exit as sys_exit
-
 from py_apps.apps.devtools.jetbrains import Jetbrains, JetbrainsVariants
 from py_apps.apps.devtools.neovim import Neovim, NvimVariants
-from py_apps.apps.devtools.vscode import VSCode as _VSCode
-from py_apps.ui.selection import Selection as _Selection
+from py_apps.apps.devtools.vscode import VSCode as VSCode
+from py_apps.ui.selection import Selection as Selection
 
 
-def run() -> None:
+def run() -> bool:
     """Run DevTools selection page"""
-    selection = _Selection(
-        idlist=["vscode", "nvim", *[e.value for e in JetbrainsVariants]],
+
+    selection = Selection(
+        idlist=["vscode", "nvim", *[e.value for e in JetbrainsVariants], "back"],
         itemlist=[
             "Visual Studio Code：微软出品，宇宙第一编辑器",
             "Neovim 加配置：极致的效率，极客们的最爱",
@@ -31,16 +30,18 @@ def run() -> None:
                 }[e.value]
                 for e in JetbrainsVariants
             ],
+            "返回上级菜单",
         ],
         dialog_title="工欲善其事，必先利其器：请选择称手的开发工具",
     ).run()
 
+    # Deciding block: decide which installer to use
     match selection:
         case "vscode":
-            _VSCode().prepare().install()
+            VSCode().prepare().install()
 
         case "nvim":
-            variant = _Selection(
+            variant = Selection(
                 idlist=["default", "astro", "space", "lazy", "lunar", "nvchad"],
                 itemlist=[
                     "默认（无配置）",
@@ -59,5 +60,18 @@ def run() -> None:
             Jetbrains(
                 JetbrainsVariants(JetbrainsVariants._value2member_map_[val])
             ).prepare().install()
+
+        # In-page loop logic: True to go back and False to continue
         case _:
-            sys_exit("TODO")
+            return True
+
+    return False
+
+
+def devtools():
+    """Devtools page looping func"""
+
+    # Inter-page loop logic: return to go back
+    while True:
+        if run():
+            return
