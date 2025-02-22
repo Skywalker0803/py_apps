@@ -2,8 +2,6 @@
 Index for browser page
 """
 
-from sys import exit as sys_exit
-
 from py_apps.apps.browser.epiphany import Epiphany
 from py_apps.apps.browser.falkon import Falkon
 from py_apps.apps.browser.firefox import Firefox
@@ -34,6 +32,7 @@ def run() -> bool:
     result = selection.run()
 
     match result:
+        # Install for firefox
         case "firefox":
             choose: str | None = Dialog(
                 idlist=["firefox", "esr"],
@@ -41,32 +40,30 @@ def run() -> bool:
                 dialog_title="Firefox 还是 ESR ？",
             ).run()
 
-            opt: FirefoxVariants = FirefoxVariants.ESR
+            Firefox(
+                FirefoxVariants(FirefoxVariants._value2member_map_[choose])
+            ).prepare().install()
 
-            if choose == "firefox":
-                opt = FirefoxVariants.FIREFOX
-
-            elif choose == "esr":
-                opt = FirefoxVariants.ESR
-
-            else:
-                print(f"BUG in {__package__}")
-                sys_exit(f"BUG in {__package__}")
-
-            Firefox(variant=opt).prepare().install()
-        case "vivaldi":
+        # For other browsers
+        case browser_variant if browser_variant in [
+            "vivaldi",
+            "midori",
+            "epiphany",
+            "falkon",
+        ]:
             try:
-                Vivaldi().prepare().install()
+                {
+                    "vivaldi": Vivaldi,
+                    "midori": Midori,
+                    "epiphany": Epiphany,
+                    "falkon": Falkon,
+                }[browser_variant]().prepare().install()
             except DistroXOnlyError as err:
                 print(str(err))
-                sys_exit("distro x only err")
-        case "midori":
-            Midori().prepare().install()
+            except Exception as err:
+                print(str(err))
 
-        case "epiphany":
-            Epiphany().prepare().install()
-        case "falkon":
-            Falkon().prepare().install()
+        # Return to upper level
         case _:
             return True
 
@@ -74,6 +71,8 @@ def run() -> bool:
 
 
 def browser():
+    """Browser page main loop"""
+
     while True:
         if run():
             return
