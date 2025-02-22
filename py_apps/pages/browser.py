@@ -4,8 +4,7 @@ Index for browser page
 
 from py_apps.apps.browser.epiphany import Epiphany
 from py_apps.apps.browser.falkon import Falkon
-from py_apps.apps.browser.firefox import Firefox
-from py_apps.apps.browser.firefox import FirefoxVariants
+from py_apps.apps.browser.firefox import Firefox, FirefoxVariants
 from py_apps.apps.browser.midori import Midori
 from py_apps.apps.browser.vivaldi import Vivaldi
 from py_apps.errors.distro_x_only import DistroXOnlyError

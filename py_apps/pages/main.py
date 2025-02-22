@@ -1,6 +1,7 @@
 """PY Apps front page"""
 
 import sys
+
 from py_apps.pages.browser import browser
 from py_apps.pages.devtools import devtools
 from py_apps.ui.selection import Selection
