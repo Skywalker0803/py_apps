@@ -70,14 +70,14 @@ run:
 	python3 -m ${APP_DIR}.main
 
 exp:
-	# Export dependencies for pip
+	@# Export dependencies for pip
 	poetry export -f requirements.txt --output requirements.txt --without-hashes
-	# Export dev dependencies for pip
+	@# Export dev dependencies for pip
 	poetry export -f requirements.txt --only dev --output requirements-dev.txt --without-hashes
 
 clean:
 	@# Remove old built files
-	rm -rfv build/ dist/
+	rm -rfv dist/
 
 pack:
 	tar -czvf dist/${APP_DIR}.tar.gz dist/${APP_DIR}
@@ -86,3 +86,4 @@ build: clean
 	pyinstaller main.spec
 	mv dist/main dist/${APP_DIR}
 	mv dist/${APP_DIR}/main dist/${APP_DIR}/py-apps
+	rm -rfv build/
