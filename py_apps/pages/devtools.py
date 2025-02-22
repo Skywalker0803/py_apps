@@ -2,7 +2,7 @@
 
 from sys import exit as sys_exit
 
-from py_apps.apps.devtools.jetbrains import JetbrainsVariants
+from py_apps.apps.devtools.jetbrains import Jetbrains, JetbrainsVariants
 from py_apps.apps.devtools.neovim import Neovim, NvimVariants
 from py_apps.apps.devtools.vscode import VSCode as _VSCode
 from py_apps.ui.selection import Selection as _Selection
@@ -53,5 +53,11 @@ def run() -> None:
                 dialog_title="Neovim：您想要什么配置文件呢？",
             ).run()
             Neovim(NvimVariants(variant)).prepare().install()
+
+        case val if val in [e.value for e in JetbrainsVariants]:
+            print(val)
+            Jetbrains(
+                JetbrainsVariants(JetbrainsVariants._value2member_map_[val])
+            ).prepare().install()
         case _:
             sys_exit("TODO")
