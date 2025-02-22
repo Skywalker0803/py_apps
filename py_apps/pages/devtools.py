@@ -2,11 +2,11 @@
 
 from py_apps.apps.devtools.jetbrains import Jetbrains, JetbrainsVariants
 from py_apps.apps.devtools.neovim import Neovim, NvimVariants
-from py_apps.apps.devtools.vscode import VSCode as VSCode
-from py_apps.ui.selection import Selection as Selection
+from py_apps.apps.devtools.vscode import VSCode
+from py_apps.ui.selection import Selection
 
 
-def run() -> bool:
+def devtools() -> bool:
     """Run DevTools selection page"""
 
     selection = Selection(
@@ -57,21 +57,10 @@ def run() -> bool:
 
         case val if val in [e.value for e in JetbrainsVariants]:
             print(val)
-            Jetbrains(
-                JetbrainsVariants(JetbrainsVariants._value2member_map_[val])
-            ).prepare().install()
+            Jetbrains(JetbrainsVariants(val)).prepare().install()
 
         # In-page loop logic: True to go back and False to continue
         case _:
             return True
 
     return False
-
-
-def devtools():
-    """Devtools page looping func"""
-
-    # Inter-page loop logic: return to go back
-    while True:
-        if run():
-            return

@@ -3,6 +3,7 @@
 import sys
 
 from py_apps.pages.browser import browser
+from py_apps.pages.common import loop
 from py_apps.pages.devtools import devtools
 from py_apps.ui.selection import Selection
 
@@ -21,10 +22,8 @@ def run() -> bool:
     ).run()
 
     match selection:
-        case "browser":
-            browser()
-        case "devtools":
-            devtools()
+        case app_type if app_type in ["browser", "devtools"]:
+            loop({"browser": browser, "devtools": devtools}[app_type])
 
         case _:
             return True

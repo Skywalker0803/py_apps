@@ -12,7 +12,7 @@ from py_apps.ui.dialog import Dialog
 from py_apps.ui.selection import Selection
 
 
-def run() -> bool:
+def browser() -> bool:
     """
     Run browser selection page
     """
@@ -39,9 +39,7 @@ def run() -> bool:
                 dialog_title="Firefox 还是 ESR ？",
             ).run()
 
-            Firefox(
-                FirefoxVariants(FirefoxVariants._value2member_map_[choose])
-            ).prepare().install()
+            Firefox(FirefoxVariants(choose)).prepare().install()
 
         # For other browsers
         case browser_variant if browser_variant in [
@@ -59,19 +57,9 @@ def run() -> bool:
                 }[browser_variant]().prepare().install()
             except DistroXOnlyError as err:
                 print(str(err))
-            except Exception as err:
-                print(str(err))
 
         # Return to upper level
         case _:
             return True
 
     return False
-
-
-def browser():
-    """Browser page main loop"""
-
-    while True:
-        if run():
-            return
