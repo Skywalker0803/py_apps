@@ -63,7 +63,7 @@ jobs:
 
       - name: Build with PyInstaller
         run: |
-          source venv/bin/activate
+          sh venv/bin/activate
           pyinstaller --platform linux_aarch64 main.spec
 
       - name: Upload artifact
