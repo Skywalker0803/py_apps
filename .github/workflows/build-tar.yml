@@ -27,7 +27,7 @@ jobs:
         run: make build && make pack
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: py_apps_dist
           path: dist/py_apps.tar.gz
