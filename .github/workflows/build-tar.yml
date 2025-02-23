@@ -46,24 +46,20 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update
-          apt-get install -y python3 python3-pip python3-poetry qemu-user-static binfmt-support
+          apt-get install -y python3 python3-pip qemu-user-static binfmt-support
 
-      - name: Set up virtual environment
-        run: |
-          poetry shell
           poetry add pyinstaller
 
       - name: Install arm64 dependencies
         run: |
           #source venv/bin/activate
           # 安装你的项目所需的 arm64 依赖，例如：
-          poetry shell
+          pip install pyinstaller
           pip install --platform linux_aarch64 -r requirements.txt
 
       - name: Build with PyInstaller
         run: |
           # sh venv/bin/activate
-          poetry shell
           pyinstaller --platform linux_aarch64 main.spec
 
       - name: Upload artifact
