@@ -53,7 +53,7 @@ jobs:
           #source venv/bin/activate
           # 安装你的项目所需的 arm64 依赖，例如：
           pip install pyinstaller
-          pip install --platform linux_aarch64 -r requirements.txt
+          pip install --platform linux_aarch64 -r requirements.txt --only-binary=:all:
 
       - name: Build with PyInstaller
         run: |
