@@ -31,3 +31,43 @@ jobs:
         with:
           name: py_apps_dist
           path: dist/py_apps.tar.gz
+
+
+  build-aarch64:
+    runs-on: ubuntu-latest
+
+    container:
+      image: ubuntu:22.04 # 或者你需要的 Ubuntu 版本
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y python3 python3-pip python3-venv qemu-user-static binfmt-support
+
+      - name: Set up virtual environment
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install pyinstaller
+
+      - name: Install arm64 dependencies
+        run: |
+          source venv/bin/activate
+          # 安装你的项目所需的 arm64 依赖，例如：
+          pip install --platform linux_aarch64 --only-binary -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: |
+          source venv/bin/activate
+          pyinstaller --platform linux_aarch64 main.spec
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: arm64_executable
+          path: dist/py_apps.tar.gz
