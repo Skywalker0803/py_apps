@@ -1,0 +1,33 @@
+name: Build py_apps
+
+on:
+  push:
+    branches:
+      - master # 或者你希望触发构建的分支
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # 或者你需要的 Python 版本
+
+      - name: Install dependencies (如果需要)
+        run: |
+          python -m pip install --upgrade pip
+          make install
+
+      - name: Build and pack
+        run: make build && make pack
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: py_apps_dist
+          path: dist/py_apps.tar.gz
