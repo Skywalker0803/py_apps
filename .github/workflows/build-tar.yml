@@ -46,14 +46,13 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update
-          apt-get install -y python3 python3-pip qemu-user-static binfmt-support
+          apt-get install -y python3 python3-pip python3-venv qemu-user-static binfmt-support
 
       - name: Install arm64 dependencies
         run: |
           #source venv/bin/activate
           # 安装你的项目所需的 arm64 依赖，例如：
-          pip install pyinstaller
-          pip install --platform linux_aarch64 -r requirements.txt --only-binary=:all:
+          make install
 
       - name: Build with PyInstaller
         run: |
