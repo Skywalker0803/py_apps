@@ -1,4 +1,4 @@
-from py3_tmoe.utils.sys import check_architecture
+from py_apps.utils.sys import check_architecture
 
 
 def test_checkarch():

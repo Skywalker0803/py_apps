@@ -98,10 +98,10 @@ Pin-Priority: 900
                 msg='when trying to give permission to "/etc/apt/preferences.d/90-mozilla-firefox"',
             )
 
-        if self.dependency_main == "" or self.dependency_others == []:
-            raise DistroXOnlyError(
-                self._DISTRO, "Debian & Archlinux & RHEL & SUSE & Void Linux"
-            )
+        # if self.dependency_main == "" and self.dependency_others == []:
+        #   raise DistroXOnlyError(
+        #      self._DISTRO, "Debian & Archlinux & RHEL & SUSE & Void Linux"
+        # )
 
     def _prepare_for_firefox(self) -> None:
         """
@@ -133,7 +133,7 @@ Pin-Priority: 900
         if self._DISTRO == "gentoo":
             run(cmd_args=["dispatch-conf"], msg="when running dispatch-conf")
 
-        if self.dependency_main == "" or self.dependency_others == []:
+        if self.dependency_main == "" and self.dependency_others == []:
             raise DistroXOnlyError(
                 self._DISTRO, "Debian & Archlinux & RHEL & SUSE & Void Linux"
             )
