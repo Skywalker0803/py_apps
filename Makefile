@@ -84,6 +84,6 @@ pack:
 
 build: clean
 	pyinstaller main.spec
-	mv dist/main dist/${APP_DIR}
-	mv dist/${APP_DIR}/main dist/${APP_DIR}/py-apps
+	#mv dist/main dist/${APP_DIR}
+	#mv dist/${APP_DIR}/main dist/${APP_DIR}/py-apps
 	rm -rfv build/
