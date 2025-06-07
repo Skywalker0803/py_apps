@@ -1,22 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-<<<<<<< HEAD
+
 data_files = [
     ('py_apps/ui/*.tcss', 'py_apps/ui'),
     ('py_apps/apps/browser/lnk/*', 'py_apps/apps/browser/lnk'),
 ]
-=======
->>>>>>> c8b487e (fix firefox install bug)
 
 a = Analysis(
     ['py_apps/main.py'],
     pathex=[],
     binaries=[],
-<<<<<<< HEAD
     datas=data_files,
-=======
-    datas=[('py_apps/ui/*.tcss', 'py_apps/ui')],
->>>>>>> c8b487e (fix firefox install bug)
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
