@@ -55,7 +55,7 @@ class Neovim:
 
         # Setup nvim configs using installer scripts
         if self.var_url == "" and variant != NvimVariants.DEFAULT:
-            self.use_installer: str = get(
+            self.use_installer = get(
                 {
                     NvimVariants.LUNAR: "https://raw.githubusercontent.com/LunarVim/LunarVim/"
                     + "release-1.4/neovim-0.9/utils/installer/install.sh",

@@ -1,9 +1,9 @@
 """Some common utils for pages"""
 
-from types import FunctionType
+from typing import Callable
 
 
-def loop(page: FunctionType):
+def loop(page: Callable):
     """Page loop function"""
 
     # Inter-page loop logic: return to go back

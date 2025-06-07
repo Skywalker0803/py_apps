@@ -50,9 +50,9 @@ def extract_tgz_file(tgz_file: str, target_pathname: str):
         str target_pathname
     """
 
-    pathname = target_pathname.split("/")
-    pathname.pop()
-    pathname = "/".join(pathname)
+    pathname_list: list[str] = target_pathname.split("/")
+    pathname_list.pop()
+    pathname: str = "/".join(pathname_list)
 
     try:
         with open_tarfile(tgz_file, "r:gz") as tar:
